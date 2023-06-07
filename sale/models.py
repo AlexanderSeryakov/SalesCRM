@@ -22,7 +22,7 @@ class Sale(models.Model):
         return self.pk
 
     @property
-    def get_total_price(self):
+    def get_total_score(self):
         total = self.price * self.quantity
         return total - total * (self.discount / 100)
 
