@@ -8,10 +8,10 @@
     <br>
     <form method="post">
     {% csrf_token %}
-        <div class="invalid-feedback">{{ form.non_field_errors }}</div>
+        <div class="custom-form-error form-label">{{ form.non_field_errors }}</div>
         {% for f in form %}
             <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}</label>{{ f }}</p>
-            <div class="invalid-feedback">{{ f.errors }}</div>
+            <div class="form-label">{{ f.errors }}</div>
         {% endfor %}
         <button type="submit" class="btn btn-success">SignUp</button>
     </form>

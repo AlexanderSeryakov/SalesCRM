@@ -31,3 +31,7 @@ th.sorted[data-order="1"]::after {
 .non-select{
     user-select: none;
 }
+
+.custom-form-error{
+    color: red;
+}

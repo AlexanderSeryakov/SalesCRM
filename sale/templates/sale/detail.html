@@ -1,0 +1,23 @@
+{% extends 'sale/base.html' %}
+
+{% block content %}
+<br>
+<div class="col-md-6 offset-md-3">
+    <div class="card">
+        <h5 class="card-header">{{detail.product_name}} | id: {{detail.id}}</h5>
+        <div class="card-body">
+            <p class="card-text"><strong>Customer Name: </strong>{{detail.customer_name}}</p>
+            <p class="card-text"><strong>Customer Phone: </strong>{{detail.customer_phone}}</p>
+            <p class="card-text"><strong>Price: </strong>{{detail.price}}</p>
+            <p class="card-text"><strong>Discount: </strong>{{detail.discount}}</p>
+            <p class="card-text"><strong>Total Score: </strong>{{detail.get_total_score}}</p>
+            <p class="card-text"><strong>Sale date: </strong>{{detail.created_at}}</p>
+            <div class="card-body">
+                {{detail.notes}}
+            </div>
+            <a href="" class="btn btn-outline-primary">Edit</a>
+            <a href="{% url 'sale_delete' detail.id %}" class="btn btn-outline-danger">Delete</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

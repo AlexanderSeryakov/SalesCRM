@@ -1,7 +1,6 @@
-import uuid
-
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class Sale(models.Model):
@@ -12,6 +11,7 @@ class Sale(models.Model):
     customer_name = models.CharField(max_length=512)
     customer_phone = models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
+    notes = models.TextField(blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, db_index=True)
 
     class Meta:
@@ -23,7 +23,7 @@ class Sale(models.Model):
         return self.product_name
 
     def get_absolute_url(self):
-        return self.pk
+        return reverse('detail', kwargs={'pk': self.pk})
 
     @property
     def get_total_score(self):
