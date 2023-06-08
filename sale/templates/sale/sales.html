@@ -1,4 +1,10 @@
 {% extends 'sale/base.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'sale/css/style.css' %}" type="text/css">
+{% endblock %}
+
 {% block content %}
 <br>
 <table class="table table-striped table-hover table_sort">
@@ -18,9 +24,9 @@
     <tbody>
     {% for sale in sales %}
     <tr>
-        <th scope="row">{{sale.id}}</th>
+        <th scope="row">{{forloop.counter}}</th>
         <td>{{sale.product_name}}</td>
-        <td>{{sale.price}}</td>
+        <td>{{sale.price|floatformat:"2"}}</td>
         <td>{{sale.quantity}}</td>
         <td>{{sale.get_total_score|floatformat:"2"}}</td>
         <td>{{sale.discount|floatformat:"0"}} %</td>

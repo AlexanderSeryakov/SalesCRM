@@ -1,4 +1,7 @@
+import uuid
+
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Sale(models.Model):
@@ -9,6 +12,7 @@ class Sale(models.Model):
     customer_name = models.CharField(max_length=512)
     customer_phone = models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, db_index=True)
 
     class Meta:
         ordering = ['-created_at']
