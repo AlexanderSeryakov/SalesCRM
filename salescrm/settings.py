@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
 
     'sale.apps.SaleConfig',
+    'analytics.apps.AnalyticsConfig',
 ]
 
 MIDDLEWARE = [

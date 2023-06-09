@@ -58,13 +58,15 @@ class SaleUpdateForm(forms.ModelForm):
     """
     product_name = forms.CharField(label='Product Name', widget=forms.TextInput(attrs={'class': 'form-control'}))
     customer_name = forms.CharField(label='Customer Name', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    customer_phone = forms.CharField(label='Customer phone', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    quantity = forms.IntegerField(label='Quantity', widget=forms.TextInput(attrs={'class': 'form-control'}))
     price = forms.FloatField(label='Price', widget=forms.TextInput(attrs={'class': 'form-control'}))
     discount = forms.IntegerField(label='Discount', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    notes = forms.CharField(label='Notes', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    notes = forms.CharField(label='Comments', widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}))
 
     class Meta:
         model = Sale
-        fields = ('product_name', 'customer_name', 'price', 'discount', 'notes')
+        fields = ('product_name', 'customer_name', 'customer_phone', 'quantity', 'price', 'discount', 'notes')
 
 
 class SaleCreateForm(SaleUpdateForm):
