@@ -39,3 +39,7 @@ th.sorted[data-order="1"]::after {
 .custom_arrow{
     width: 25px;
 }
+
+.common_btn_margins{
+    margin-right:20px;
+}

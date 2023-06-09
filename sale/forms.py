@@ -20,6 +20,7 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
 
+    # override default widget attrs to custom
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super(SignUpForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['class'] = 'form-control'
@@ -52,7 +53,9 @@ class LoginUserForm(AuthenticationForm):
 
 
 class SaleUpdateForm(forms.ModelForm):
-    """Form for update sale-object"""
+    """ Form for update sale-object.
+        This for used in SaleUpdateView.
+    """
     product_name = forms.CharField(label='Product Name', widget=forms.TextInput(attrs={'class': 'form-control'}))
     customer_name = forms.CharField(label='Customer Name', widget=forms.TextInput(attrs={'class': 'form-control'}))
     price = forms.FloatField(label='Price', widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -67,7 +70,8 @@ class SaleUpdateForm(forms.ModelForm):
 class SaleCreateForm(SaleUpdateForm):
     """
         Form for create a new Sale-object.
-        Save-method override to automatically write current user to user-field
+        Save-method override to automatically write current user to user-field.
+        This form used in SaleCreateView.
     """
     def __init__(self, user_info, *args, **kwargs):
         self.user_info = user_info

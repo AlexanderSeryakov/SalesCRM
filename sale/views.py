@@ -52,14 +52,14 @@ class SaleDeleteView(DeleteView):
     template_name = 'sale/detail.html'
 
 
-class RegisterUser(CreateView):
+class RegisterUserView(CreateView):
     form_class = forms.SignUpForm
     template_name = 'sale/registration.html'
     success_url = reverse_lazy('login')
     extra_context = {'title': 'SignUp'}
 
 
-class LoginUser(LoginView):
+class LoginUserView(LoginView):
     form_class = forms.LoginUserForm
     template_name = 'sale/login.html'
     extra_context = {'title': 'Login'}
@@ -68,6 +68,6 @@ class LoginUser(LoginView):
         return reverse_lazy('sales')
 
 
-class LogoutUser(LogoutView):
+class LogoutUserView(LogoutView):
     next_page = reverse_lazy('login')
     template_name = 'sale/login.html'
