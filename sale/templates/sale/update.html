@@ -1,0 +1,18 @@
+{% extends 'sale/base.html' %}
+
+{% block content %}
+
+<br>
+<div class="col-md-6 offset-md-3">
+    <form method="post">
+        {% csrf_token %}
+        <div class="custom-form-error form-label">{{ form.non_field_errors }}</div>
+        {% for f in form %}
+        <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}</label>{{ f }}</p>
+        <div class="form-label">{{ f.errors }}</div>
+        {% endfor %}
+        <input type="submit" value="Update">
+    </form>
+</div>
+
+{% endblock %}

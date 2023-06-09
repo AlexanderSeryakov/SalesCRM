@@ -15,9 +15,15 @@
             <div class="card-body">
                 {{detail.notes}}
             </div>
-            <a href="" class="btn btn-outline-primary">Edit</a>
-            <a href="{% url 'sale_delete' detail.id %}" class="btn btn-outline-danger">Delete</a>
         </div>
+    </div>
+    <br>
+    <div class="wrapper">
+        <a class="btn btn-primary" href="{% url 'sale_update' detail.pk %}">Edit</a>
+        <form style="display:inline" method="POST" action="{% url 'sale_delete' detail.pk %}">
+            {% csrf_token %}
+            <input type="submit" value="Delete" class="btn btn-danger">
+        </form>
     </div>
 </div>
 {% endblock %}

@@ -3,6 +3,7 @@ from typing import Any
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django import forms
+from .models import Sale
 
 
 class SignUpForm(UserCreationForm):
@@ -44,4 +45,30 @@ class LoginUserForm(AuthenticationForm):
     username = forms.CharField(label='Username', widget=forms.TextInput(attrs={'class': 'form-control'}))
     password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
+
+class SaleUpdateForm(forms.ModelForm):
+    """Form for update sale-object"""
+    product_name = forms.CharField(label='Product Name', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    customer_name = forms.CharField(label='Customer Name', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    price = forms.FloatField(label='Price', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    discount = forms.IntegerField(label='Discount', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    notes = forms.CharField(label='Notes', widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = Sale
+        fields = ('product_name', 'customer_name', 'price', 'discount', 'notes')
+
+
+class SaleCreateForm(SaleUpdateForm):
+    """
+        Form for create a new Sale-object.
+        Save-method override to automatically write current user to user-field
+    """
+    def __init__(self, user_info, *args, **kwargs):
+        self.user_info = user_info
+        super().__init__(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.instance.user = self.user_info
+        return super().save(*args, **kwargs)
 
