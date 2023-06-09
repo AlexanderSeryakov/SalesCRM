@@ -1,8 +1,10 @@
 {% extends 'sale/base.html' %}
+{% load static %}
 
 {% block content %}
 <br>
 <div class="col-md-6 offset-md-3">
+    <a href="{% url 'sales' %}"><img class="custom_arrow" src="{% static 'sale/images/arrow-left.png' %}" alt="left"></a>
     <div class="card">
         <h5 class="card-header">{{detail.product_name}} | id: {{detail.id}}</h5>
         <div class="card-body">

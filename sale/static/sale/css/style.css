@@ -35,3 +35,7 @@ th.sorted[data-order="1"]::after {
 .custom-form-error{
     color: red;
 }
+
+.custom_arrow{
+    width: 25px;
+}

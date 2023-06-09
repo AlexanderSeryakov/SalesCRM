@@ -43,6 +43,7 @@ class SaleUpdateView(UpdateView):
     form_class = forms.SaleUpdateForm
     model = models.Sale
     template_name = 'sale/update.html'
+    extra_context = {'title': 'Edit'}
 
 
 class SaleDeleteView(DeleteView):
