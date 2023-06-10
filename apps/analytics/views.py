@@ -1,7 +1,6 @@
-from django.http import HttpResponse
 from django.shortcuts import render
 
-from sale.models import Sale
+from apps.sale.models import Sale
 
 
 def home(request):
