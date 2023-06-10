@@ -38,7 +38,9 @@ INSTALLED_APPS = [
 
     'apps.sale.apps.SaleConfig',
     'apps.analytics.apps.AnalyticsConfig',
+    'apps.product.apps.ProductConfig',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

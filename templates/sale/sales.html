@@ -21,8 +21,8 @@
     {% for sale in sales %}
     <tr>
         <td scope="row"><a href="{{ sale.get_absolute_url }}">{{sale.id}}</a></td>
-        <td>{{sale.product_name}}</td>
-        <td>{{sale.price|floatformat:"2"}}</td>
+        <td>{{sale.product.name}}</td>
+        <td>{{sale.product.price|floatformat:"2"}}</td>
         <td>{{sale.quantity}}</td>
         <td>{{sale.get_total_score|floatformat:"2"}}</td>
         <td>{{sale.discount|floatformat:"0"}} %</td>

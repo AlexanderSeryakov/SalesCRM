@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Sale
+from .models import Sale, Product
 
 
 class SignUpForm(UserCreationForm):
@@ -57,17 +57,17 @@ class SaleUpdateForm(forms.ModelForm):
     """ Form for update sale-object.
         This for used in SaleUpdateView.
     """
-    product_name = forms.CharField(label='Product Name', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    product = forms.ModelChoiceField(label='Product', queryset=Product.objects.filter(in_stock=True), empty_label='',
+                                     widget=forms.Select(attrs={'class': 'form-select'}))
     customer_name = forms.CharField(label='Customer Name', widget=forms.TextInput(attrs={'class': 'form-control'}))
     customer_phone = forms.CharField(label='Customer phone', widget=forms.TextInput(attrs={'class': 'form-control'}))
     quantity = forms.IntegerField(label='Quantity', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    price = forms.FloatField(label='Price', widget=forms.TextInput(attrs={'class': 'form-control'}))
     discount = forms.IntegerField(label='Discount', widget=forms.TextInput(attrs={'class': 'form-control'}))
     notes = forms.CharField(label='Comments', widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}))
 
     class Meta:
         model = Sale
-        fields = ('product_name', 'customer_name', 'customer_phone', 'quantity', 'price', 'discount', 'notes')
+        fields = ('product', 'customer_name', 'customer_phone', 'quantity', 'discount', 'notes')
 
 
 class SaleCreateForm(SaleUpdateForm):
@@ -76,6 +76,7 @@ class SaleCreateForm(SaleUpdateForm):
         Save-method override to automatically write current user to user-field.
         This form used in SaleCreateView.
     """
+
     def __init__(self, user_info, *args, **kwargs):
         self.user_info = user_info
         super().__init__(*args, **kwargs)
@@ -83,4 +84,3 @@ class SaleCreateForm(SaleUpdateForm):
     def save(self, *args, **kwargs):
         self.instance.user = self.user_info
         return super().save(*args, **kwargs)
-

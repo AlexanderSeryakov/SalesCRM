@@ -1,5 +1,5 @@
 from django.contrib.auth.views import LoginView, LogoutView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
@@ -31,6 +31,7 @@ class SaleCreateView(CreateView):
     form_class = forms.SaleCreateForm
     model = models.Sale
     template_name = 'sale/create.html'
+    extra_context = {'title': 'New Sale'}
 
     def get_form_kwargs(self):
         """Update kwargs for hand over current-user object to form"""
@@ -52,6 +53,10 @@ class SaleDeleteView(DeleteView):
     model = models.Sale
     success_url = reverse_lazy('sales')
     template_name = 'sale/detail.html'
+
+
+class ProductListView(ListView):
+    model = models.Product
 
 
 class RegisterUserView(CreateView):

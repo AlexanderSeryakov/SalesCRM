@@ -1,0 +1,26 @@
+{% extends 'sale/base.html' %}
+{% load static %}
+
+{% block content %}
+<br>
+<div class="col-md-6 offset-md-3">
+    <a href="{% url 'product' %}"><img class="custom_arrow" src="{% static 'sale/images/arrow-left.png' %}"
+                                     alt="left"></a>
+    <div class="card">
+        <h5 class="card-header">{{product.name}} | id: {{product.id}}</h5>
+        <div class="card-body">
+            <p class="card-text"><strong>Name: </strong>{{product.name}}</p>
+            <p class="card-text"><strong>Price: </strong>{{product.price}}</p>
+            <p class="card-text"><strong>In Stock: </strong>{{product.in_stock}}</p>
+        </div>
+    </div>
+    <br>
+    <div class="wrapper">
+        <a class="btn btn-primary" href="">Edit</a>
+        <form style="display:inline" method="POST" action="">
+            {% csrf_token %}
+            <input type="submit" value="Delete" class="btn btn-danger">
+        </form>
+    </div>
+</div>
+{% endblock %}
