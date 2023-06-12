@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
+from .utils import SaleModelMixin
 from . import forms, models
 from apps.common_utils import CurrentUserMixin
 
@@ -16,8 +17,7 @@ class SaleListView(ListView):
         return models.Sale.objects.filter(user_id=self.request.user.pk)
 
 
-class SaleDetailView(DetailView):
-    model = models.Sale
+class SaleDetailView(SaleModelMixin, DetailView):
     template_name = 'sale/detail.html'
     context_object_name = 'detail'
 
@@ -27,28 +27,21 @@ class SaleDetailView(DetailView):
         return context
 
 
-class SaleCreateView(CurrentUserMixin, CreateView):
+class SaleCreateView(SaleModelMixin, CurrentUserMixin, CreateView):
     form_class = forms.SaleCreateForm
-    model = models.Sale
     template_name = 'sale/create.html'
     extra_context = {'title': 'New Sale'}
 
 
-class SaleUpdateView(UpdateView):
+class SaleUpdateView(SaleModelMixin, UpdateView):
     form_class = forms.SaleUpdateForm
-    model = models.Sale
     template_name = 'sale/update.html'
     extra_context = {'title': 'Edit'}
 
 
-class SaleDeleteView(DeleteView):
-    model = models.Sale
-    success_url = reverse_lazy('sales')
+class SaleDeleteView(SaleModelMixin, DeleteView):
     template_name = 'sale/detail.html'
-
-
-class ProductListView(ListView):
-    model = models.Product
+    success_url = reverse_lazy('sales')
 
 
 class RegisterUserView(CreateView):
@@ -68,5 +61,5 @@ class LoginUserView(LoginView):
 
 
 class LogoutUserView(LogoutView):
-    next_page = reverse_lazy('login')
     template_name = 'sale/login.html'
+    next_page = reverse_lazy('login')
