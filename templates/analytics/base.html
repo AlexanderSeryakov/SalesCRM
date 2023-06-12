@@ -1,17 +1,13 @@
-<!DOCTYPE html>
+{% extends 'common/base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="{% static 'sale/css/style.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <!--    <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.min.js"></script>-->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-<a href="{% url 'sales' %}"><img class="custom_arrow" src="{% static 'sale/images/arrow-left.png' %}" alt="left"></a>
+
+{% block header %}
+<!--    <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.min.js"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<a href="{% url 'sales' %}"><img class="custom_arrow" src="{% static 'common/images/arrow-left.png' %}" alt="left"></a>
 <div class="container">
     <canvas id="myChart"></canvas>
     <canvas id="chart"></canvas>
@@ -63,9 +59,6 @@
   }
 });
 
-
 </script>
 
-</body>
-
-</html>
+{% endblock %}

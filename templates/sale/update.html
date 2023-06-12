@@ -1,10 +1,10 @@
-{% extends 'sale/base.html' %}
+{% extends 'common/base.html' %}
 {% load static %}
 {% block content %}
 
 <br>
 <div class="col-md-6 offset-md-3">
-    <a href="{% url 'sales' %}"><img class="custom_arrow" src="{% static 'sale/images/arrow-left.png' %}" alt="left"></a>
+    <a href="{% url 'sales' %}"><img class="custom_arrow" src="{% static 'common/images/arrow-left.png' %}" alt="left"></a>
     <form method="post">
         {% csrf_token %}
         <div class="custom-form-error form-label">{{ form.non_field_errors }}</div>
