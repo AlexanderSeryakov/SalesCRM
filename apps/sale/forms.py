@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Sale, Product
+from .models import Sale, Product, TestModel
 
 
 class SignUpForm(UserCreationForm):
@@ -84,3 +84,11 @@ class SaleCreateForm(SaleUpdateForm):
     def save(self, *args, **kwargs):
         self.instance.user = self.user_info
         return super().save(*args, **kwargs)
+
+
+class TestForm(forms.ModelForm):
+    string = forms.CharField(max_length=256, label='string: ')
+
+    class Meta:
+        model = TestModel
+        fields = ('string', )
