@@ -3,9 +3,9 @@
 
 {% block content %}
 <br>
+<a href="{% url 'product' %}"><img class="custom_arrow" src="{% static 'sale/images/arrow-left.png' %}"
+                                   alt="left"></a>
 <div class="col-md-6 offset-md-3">
-    <a href="{% url 'product' %}"><img class="custom_arrow" src="{% static 'sale/images/arrow-left.png' %}"
-                                     alt="left"></a>
     <div class="card">
         <h5 class="card-header">{{product.name}} | id: {{product.id}}</h5>
         <div class="card-body">
@@ -16,8 +16,8 @@
     </div>
     <br>
     <div class="wrapper">
-        <a class="btn btn-primary" href="">Edit</a>
-        <form style="display:inline" method="POST" action="">
+        <a class="btn btn-primary" href="{% url 'product_update' product.pk %}">Edit</a>
+        <form style="display:inline" method="POST" action="{% url 'product_delete' product.pk %}">
             {% csrf_token %}
             <input type="submit" value="Delete" class="btn btn-danger">
         </form>

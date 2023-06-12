@@ -1,13 +1,13 @@
 from django.contrib.auth.views import LoginView, LogoutView
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
 from . import forms, models
+from apps.common_utils import CurrentUserMixin
 
 
 class SaleListView(ListView):
-    model = models.Sale
     template_name = 'sale/sales.html'
     context_object_name = 'sales'
     extra_context = {'title': 'Sales'}
@@ -27,19 +27,11 @@ class SaleDetailView(DetailView):
         return context
 
 
-class SaleCreateView(CreateView):
+class SaleCreateView(CurrentUserMixin, CreateView):
     form_class = forms.SaleCreateForm
     model = models.Sale
     template_name = 'sale/create.html'
     extra_context = {'title': 'New Sale'}
-
-    def get_form_kwargs(self):
-        """Update kwargs for hand over current-user object to form"""
-        kwargs = super().get_form_kwargs()
-        kwargs.update({
-            'user_info': self.request.user if self.request.user.is_authenticated else None,
-        })
-        return kwargs
 
 
 class SaleUpdateView(UpdateView):

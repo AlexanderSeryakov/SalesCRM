@@ -1,16 +1,20 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="{% static 'sale/css/style.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <!--    <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.min.js"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+<a href="{% url 'sales' %}"><img class="custom_arrow" src="{% static 'sale/images/arrow-left.png' %}" alt="left"></a>
 <div class="container">
     <canvas id="myChart"></canvas>
+    <canvas id="chart"></canvas>
 </div>
 
 
@@ -20,10 +24,10 @@
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: [{%for d in data_set%}'{{d.product_name}}',{%endfor%}],
+      labels: [{%for d in data_set%}'{{d.product.name}}',{%endfor%}],
       datasets: [{
         label: 'price',
-        data: [{%for d in data_set%}'{{d.price}}',{%endfor%}],
+        data: [{%for d in data_set%}'{{d.get_total_score}}',{%endfor%}],
         borderWidth: 1
       }]
     },
@@ -35,6 +39,30 @@
       }
     }
   });
+
+  let ctx1 = document.getElementById("chart").getContext("2d");
+
+  let chart = new Chart(ctx1, {
+  type: "bar",
+  data: {
+     labels: ["2020/Q1", "2020/Q2", "2020/Q3", "2020/Q4"],
+     datasets: [
+        {
+          label: "Gross volume ($)",
+          backgroundColor: "#79AEC8",
+          borderColor: "#417690",
+          data: [26900, 28700, 27300, 29200]
+        }
+     ]
+  },
+  options: {
+     title: {
+        text: "Gross Volume in 2020",
+        display: true
+     }
+  }
+});
+
 
 </script>
 
