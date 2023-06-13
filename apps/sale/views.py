@@ -3,9 +3,11 @@ from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
+from apps.common_utils import CurrentUserMixin, UserProductsMixin
+
+from .forms import LoginUserForm, SaleCreateForm, SaleUpdateForm, SignUpForm
+from .models import Sale
 from .utils import SaleModelMixin
-from . import forms, models
-from apps.common_utils import CurrentUserMixin
 
 
 class SaleListView(ListView):
@@ -14,7 +16,7 @@ class SaleListView(ListView):
     extra_context = {'title': 'Sales'}
 
     def get_queryset(self):
-        return models.Sale.objects.filter(user_id=self.request.user.pk)
+        return Sale.objects.filter(user_id=self.request.user.pk).select_related('product')
 
 
 class SaleDetailView(SaleModelMixin, DetailView):
@@ -27,14 +29,14 @@ class SaleDetailView(SaleModelMixin, DetailView):
         return context
 
 
-class SaleCreateView(SaleModelMixin, CurrentUserMixin, CreateView):
-    form_class = forms.SaleCreateForm
+class SaleCreateView(SaleModelMixin, CurrentUserMixin, UserProductsMixin, CreateView):
+    form_class = SaleCreateForm
     template_name = 'sale/create.html'
     extra_context = {'title': 'New Sale'}
 
 
-class SaleUpdateView(SaleModelMixin, UpdateView):
-    form_class = forms.SaleUpdateForm
+class SaleUpdateView(SaleModelMixin, UserProductsMixin, UpdateView):
+    form_class = SaleUpdateForm
     template_name = 'sale/update.html'
     extra_context = {'title': 'Edit'}
 
@@ -45,14 +47,14 @@ class SaleDeleteView(SaleModelMixin, DeleteView):
 
 
 class RegisterUserView(CreateView):
-    form_class = forms.SignUpForm
+    form_class = SignUpForm
     template_name = 'sale/registration.html'
     success_url = reverse_lazy('login')
     extra_context = {'title': 'SignUp'}
 
 
 class LoginUserView(LoginView):
-    form_class = forms.LoginUserForm
+    form_class = LoginUserForm
     template_name = 'sale/login.html'
     extra_context = {'title': 'Login'}
 
