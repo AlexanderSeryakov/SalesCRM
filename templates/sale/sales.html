@@ -10,7 +10,7 @@
     <thead class="table-dark non-select">
     <tr>
         <th scope="col">ID</th>
-        <th scope="col">Title</th>
+        <th scope="col">Product Name</th>
         <th scope="col">Price</th>
         <th scope="col">Quantity</th>
         <th scope="col">Total score</th>
@@ -24,7 +24,7 @@
     {% for sale in sales %}
     <tr>
         <td scope="row"><a href="{{ sale.get_absolute_url }}">{{sale.id}}</a></td>
-        <td>{{sale.product.name}}</td>
+        <td><a href="{{sale.product.get_absolute_url}}">{{sale.product.name}}</a></td>
         <td>{{sale.product.price|floatformat:"2"}}</td>
         <td>{{sale.quantity}}</td>
         <td>{{sale.get_total_score|floatformat:"2"}}</td>
