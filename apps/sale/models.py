@@ -5,10 +5,6 @@ from django.urls import reverse
 from apps.product.models import Product
 
 
-class TestModel(models.Model):
-    string = models.CharField(max_length=256)
-
-
 class Sale(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT, blank=True, null=True)
     quantity = models.IntegerField(default=1)

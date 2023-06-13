@@ -1,14 +1,15 @@
-from django.http import HttpResponseRedirect
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
-from .utils import ProductModelMixin
+from apps.common_utils import CurrentUserMixin
+from apps.sale.models import Sale
+
 from .forms import ProductCreateForm, ProductUpdateForm
 from .models import Product
-from apps.sale.models import Sale
-from apps.common_utils import CurrentUserMixin
+from .utils import ProductModelMixin
 
 
 class ProductListView(ProductModelMixin, ListView):

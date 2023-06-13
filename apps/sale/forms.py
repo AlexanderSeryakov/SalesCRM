@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Sale, Product, TestModel
+from .models import Sale
 
 
 class SignUpForm(UserCreationForm):
@@ -57,8 +57,7 @@ class SaleUpdateForm(forms.ModelForm):
     """ Form for update sale-object.
         This for used in SaleUpdateView.
     """
-    product = forms.ModelChoiceField(label='Product', queryset=Product.objects.filter(in_stock=True), empty_label='',
-                                     widget=forms.Select(attrs={'class': 'form-select'}))
+    product = forms.HiddenInput()
     customer_name = forms.CharField(label='Customer Name', widget=forms.TextInput(attrs={'class': 'form-control'}))
     customer_phone = forms.CharField(label='Customer phone', widget=forms.TextInput(attrs={'class': 'form-control'}))
     quantity = forms.IntegerField(label='Quantity', widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -84,11 +83,3 @@ class SaleCreateForm(SaleUpdateForm):
     def save(self, *args, **kwargs):
         self.instance.user = self.user_info
         return super().save(*args, **kwargs)
-
-
-class TestForm(forms.ModelForm):
-    string = forms.CharField(max_length=256, label='string: ')
-
-    class Meta:
-        model = TestModel
-        fields = ('string', )

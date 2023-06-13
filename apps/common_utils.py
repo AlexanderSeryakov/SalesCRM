@@ -1,3 +1,8 @@
+from django import forms
+
+from apps.product.models import Product
+
+
 class CurrentUserMixin:
     """ Mixin for hand-over current user and append user-object in kwargs.
         Use it in child-class of CreateView only!
@@ -8,3 +13,21 @@ class CurrentUserMixin:
             'user_info': self.request.user if self.request.user.is_authenticated else None,
         })
         return kwargs
+
+
+class UserProductsMixin:
+    """
+    Mixin to get the products of the current user.
+    Adds a new 'product' ModelChoiceField field to the form or overrides
+    a hidden 'product' field.
+    Use it with CreateView, UpdateView inheritors.
+    """
+    def get_form(self, form_class=None):
+        if form_class is None:
+            form_class = self.get_form_class()
+        form = form_class(**self.get_form_kwargs())
+        form.fields['product'] = forms.ModelChoiceField(label='Product',
+                                                        queryset=Product.objects.filter(user_id=self.request.user.pk,
+                                                                                        in_stock=True),
+                                                        widget=forms.Select(attrs={'class': 'form-select'}))
+        return form
