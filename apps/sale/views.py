@@ -22,11 +22,7 @@ class SaleListView(ListView):
 class SaleDetailView(SaleModelMixin, DetailView):
     template_name = 'sale/detail.html'
     context_object_name = 'detail'
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = f"Detail: {self.request.__dict__['resolver_match'].kwargs['pk']}"
-        return context
+    extra_context = {'title': 'Edit Sale'}
 
 
 class SaleCreateView(SaleModelMixin, CurrentUserMixin, UserProductsMixin, CreateView):

@@ -8,10 +8,11 @@ class ProductUpdateForm(forms.ModelForm):
     price = forms.DecimalField(label='Price', widget=forms.TextInput(attrs={'class': 'form-control'}))
     in_stock = forms.BooleanField(label='In Stock: ',
                                   widget=forms.CheckboxInput(attrs={'class': 'form-check'}), required=False)
+    notes = forms.CharField(label='Description', widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}))
 
     class Meta:
         model = Product
-        fields = ('name', 'price', 'in_stock')
+        fields = ('name', 'price', 'in_stock', 'notes')
 
 
 class ProductCreateForm(ProductUpdateForm):
