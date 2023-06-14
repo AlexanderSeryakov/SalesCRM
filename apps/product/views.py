@@ -9,7 +9,7 @@ from apps.sale.models import Sale
 
 from .forms import ProductCreateForm, ProductUpdateForm
 from .models import Product
-from .utils import ProductModelMixin
+from .utils import ProductModelMixin, UserProductPermissionMixin
 
 
 class ProductListView(ProductModelMixin, ListView):
@@ -21,25 +21,25 @@ class ProductListView(ProductModelMixin, ListView):
         return Product.objects.filter(user_id=self.request.user.pk)
 
 
-class ProductDetailView(ProductModelMixin, DetailView):
+class ProductDetailView(ProductModelMixin, UserProductPermissionMixin, DetailView):
     context_object_name = 'product'
     extra_context = {'title': 'Product'}
     template_name = 'product/detail.html'
 
 
-class ProductCreateView(CurrentUserMixin, ProductModelMixin, CreateView):
+class ProductCreateView(ProductModelMixin, CurrentUserMixin, CreateView):
     form_class = ProductCreateForm
     template_name = 'product/create.html'
     extra_context = {'title': 'New Product'}
 
 
-class ProductUpdateView(ProductModelMixin, UpdateView):
+class ProductUpdateView(ProductModelMixin, UserProductPermissionMixin, UpdateView):
     form_class = ProductUpdateForm
     template_name = 'product/update.html'
     extra_context = {'title': 'Edit Product'}
 
 
-class ProductDeleteView(ProductModelMixin, DeleteView):
+class ProductDeleteView(ProductModelMixin, UserProductPermissionMixin, DeleteView):
     success_url = reverse_lazy('product')
     template_name = 'product/products.html'
 
