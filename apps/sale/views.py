@@ -5,9 +5,10 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
 
 from apps.common_utils import CurrentUserMixin, UserProductsMixin
 
-from .forms import LoginUserForm, SaleCreateForm, SaleUpdateForm, SignUpForm
+from .forms import SaleCreateForm, SaleUpdateForm
 from .models import Sale
 from .utils import SaleModelMixin
+from ..user_auth.forms import SignUpForm, LoginUserForm
 
 
 class SaleListView(ListView):
