@@ -7,10 +7,10 @@ from apps.common_utils import CurrentUserMixin, UserProductsMixin
 
 from .forms import LoginUserForm, SaleCreateForm, SaleUpdateForm, SignUpForm
 from .models import Sale
-from .utils import SaleModelMixin
+from .utils import SaleModelMixin, UserSalePermissionMixin
 
 
-class SaleListView(ListView):
+class SaleListView(SaleModelMixin, ListView):
     template_name = 'sale/sales.html'
     context_object_name = 'sales'
     extra_context = {'title': 'Sales'}
@@ -19,7 +19,7 @@ class SaleListView(ListView):
         return Sale.objects.filter(user_id=self.request.user.pk).select_related('product')
 
 
-class SaleDetailView(SaleModelMixin, DetailView):
+class SaleDetailView(SaleModelMixin, UserSalePermissionMixin, DetailView):
     template_name = 'sale/detail.html'
     context_object_name = 'detail'
     extra_context = {'title': 'Edit Sale'}
@@ -31,17 +31,18 @@ class SaleCreateView(SaleModelMixin, CurrentUserMixin, UserProductsMixin, Create
     extra_context = {'title': 'New Sale'}
 
 
-class SaleUpdateView(SaleModelMixin, UserProductsMixin, UpdateView):
+class SaleUpdateView(SaleModelMixin, UserSalePermissionMixin, UserProductsMixin, UpdateView):
     form_class = SaleUpdateForm
     template_name = 'sale/update.html'
     extra_context = {'title': 'Edit'}
 
 
-class SaleDeleteView(SaleModelMixin, DeleteView):
+class SaleDeleteView(SaleModelMixin, UserSalePermissionMixin, DeleteView):
     template_name = 'sale/detail.html'
     success_url = reverse_lazy('sales')
 
 
+# Auth view. Need create separate auth app and move this view in auth app
 class RegisterUserView(CreateView):
     form_class = SignUpForm
     template_name = 'sale/registration.html'
