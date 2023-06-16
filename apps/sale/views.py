@@ -2,7 +2,8 @@ from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
-from apps.common_utils import CurrentUserMixin, UserProductsMixin, CustomLoginRequiredMixin
+from apps.common_utils import (CurrentUserMixin, CustomLoginRequiredMixin,
+                               UserProductsMixin)
 
 from .forms import SaleCreateForm, SaleUpdateForm
 from .models import Sale
