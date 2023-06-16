@@ -1,17 +1,15 @@
-from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
-from apps.common_utils import CurrentUserMixin, UserProductsMixin
+from apps.common_utils import CurrentUserMixin, UserProductsMixin, CustomLoginRequiredMixin
 
 from .forms import SaleCreateForm, SaleUpdateForm
 from .models import Sale
 from .utils import SaleModelMixin
-from ..user_auth.forms import SignUpForm, LoginUserForm
 
 
-class SaleListView(ListView):
+class SaleListView(CustomLoginRequiredMixin, ListView):
     template_name = 'sale/sales.html'
     context_object_name = 'sales'
     extra_context = {'title': 'Sales'}
@@ -20,45 +18,24 @@ class SaleListView(ListView):
         return Sale.objects.filter(user_id=self.request.user.pk).select_related('product')
 
 
-class SaleDetailView(SaleModelMixin, DetailView):
+class SaleDetailView(CustomLoginRequiredMixin, SaleModelMixin, DetailView):
     template_name = 'sale/detail.html'
     context_object_name = 'detail'
     extra_context = {'title': 'Edit Sale'}
 
 
-class SaleCreateView(SaleModelMixin, CurrentUserMixin, UserProductsMixin, CreateView):
+class SaleCreateView(CustomLoginRequiredMixin, SaleModelMixin, CurrentUserMixin, UserProductsMixin, CreateView):
     form_class = SaleCreateForm
     template_name = 'sale/create.html'
     extra_context = {'title': 'New Sale'}
 
 
-class SaleUpdateView(SaleModelMixin, UserProductsMixin, UpdateView):
+class SaleUpdateView(CustomLoginRequiredMixin, SaleModelMixin, UserProductsMixin, UpdateView):
     form_class = SaleUpdateForm
     template_name = 'sale/update.html'
     extra_context = {'title': 'Edit'}
 
 
-class SaleDeleteView(SaleModelMixin, DeleteView):
+class SaleDeleteView(CustomLoginRequiredMixin, SaleModelMixin, DeleteView):
     template_name = 'sale/detail.html'
     success_url = reverse_lazy('sales')
-
-
-class RegisterUserView(CreateView):
-    form_class = SignUpForm
-    template_name = 'sale/registration.html'
-    success_url = reverse_lazy('login')
-    extra_context = {'title': 'SignUp'}
-
-
-class LoginUserView(LoginView):
-    form_class = LoginUserForm
-    template_name = 'sale/login.html'
-    extra_context = {'title': 'Login'}
-
-    def get_success_url(self):
-        return reverse_lazy('sales')
-
-
-class LogoutUserView(LogoutView):
-    template_name = 'sale/login.html'
-    next_page = reverse_lazy('login')

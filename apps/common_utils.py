@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from apps.product.models import Product
 
 
@@ -30,3 +32,14 @@ class UserProductsMixin:
                                                                                         in_stock=True),
                                                         widget=forms.Select(attrs={'class': 'form-select'}))
         return form
+
+
+class CustomLoginRequiredMixin(LoginRequiredMixin, ):
+    """
+    Mixin for checking user is logged in.
+    If user is AnonymousUser - redirect to login page.
+
+    You can use it in anything CBV.
+    """
+    login_url = '/auth/login/'
+    redirect_field_name = None
