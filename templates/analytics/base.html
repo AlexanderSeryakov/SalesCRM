@@ -20,10 +20,10 @@
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: [{%for d in data_set%}'{{d.product.name}}',{%endfor%}],
+      labels: [{%for d in data_set%}'{{d.product__name}}',{%endfor%}],
       datasets: [{
         label: 'price',
-        data: [{%for d in data_set%}'{{d.get_total_score}}',{%endfor%}],
+        data: [{%for d in data_set%}'{{d.total_sum}}',{%endfor%}],
         borderWidth: 1
       }]
     },
