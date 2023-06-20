@@ -9,10 +9,11 @@ from apps.sale.models import Sale
 
 from .forms import ProductCreateForm, ProductUpdateForm
 from .models import Product
-from .utils import ProductModelMixin, UserProductPermissionMixin
+from .utils import UserProductPermissionMixin
 
 
-class ProductListView(CustomLoginRequiredMixin, ProductModelMixin, ListView):
+class ProductListView(CustomLoginRequiredMixin, ListView):
+    paginate_by = 10
     context_object_name = 'products'
     extra_context = {'title': 'Products'}
     template_name = 'product/products.html'
@@ -21,25 +22,29 @@ class ProductListView(CustomLoginRequiredMixin, ProductModelMixin, ListView):
         return Product.objects.filter(user_id=self.request.user.pk)
 
 
-class ProductDetailView(CustomLoginRequiredMixin, ProductModelMixin, UserProductPermissionMixin, DetailView):
+class ProductDetailView(CustomLoginRequiredMixin, UserProductPermissionMixin, DetailView):
+    model = Product
     context_object_name = 'product'
     extra_context = {'title': 'Product'}
     template_name = 'product/detail.html'
 
 
-class ProductCreateView(CustomLoginRequiredMixin, ProductModelMixin, CurrentUserMixin, CreateView):
+class ProductCreateView(CustomLoginRequiredMixin, CurrentUserMixin, CreateView):
+    model = Product
     form_class = ProductCreateForm
     template_name = 'product/create.html'
     extra_context = {'title': 'New Product'}
 
 
-class ProductUpdateView(CustomLoginRequiredMixin, ProductModelMixin, UserProductPermissionMixin, UpdateView):
+class ProductUpdateView(CustomLoginRequiredMixin, UserProductPermissionMixin, UpdateView):
+    model = Product
     form_class = ProductUpdateForm
     template_name = 'product/update.html'
     extra_context = {'title': 'Edit Product'}
 
 
-class ProductDeleteView(CustomLoginRequiredMixin, ProductModelMixin, UserProductPermissionMixin, DeleteView):
+class ProductDeleteView(CustomLoginRequiredMixin, UserProductPermissionMixin, DeleteView):
+    model = Product
     success_url = reverse_lazy('product')
     template_name = 'product/products.html'
 

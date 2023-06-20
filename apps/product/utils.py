@@ -3,13 +3,9 @@ from django.http import Http404
 from .models import Product
 
 
-class ProductModelMixin:
-    model = Product
-
-
 class UserProductPermissionMixin:
     """
-    Mixin for checking user permission to manage the current Sale-object.
+    Mixin for checking user permission to manage the current Product-object.
     Override get_object method from django SingleObjectMixin.
 
     if user does not have permission, returned Http404

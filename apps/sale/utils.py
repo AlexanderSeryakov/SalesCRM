@@ -3,11 +3,6 @@ from django.http import Http404
 from .models import Sale
 
 
-class SaleModelMixin:
-    """ Common attrs Sale model for views """
-    model = Sale
-
-
 class UserSalePermissionMixin:
     """
     Mixin for checking user permission to manage the current Sale-object.

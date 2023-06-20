@@ -7,10 +7,11 @@ from apps.common_utils import (CurrentUserMixin, CustomLoginRequiredMixin,
 
 from .forms import SaleCreateForm, SaleUpdateForm
 from .models import Sale
-from .utils import SaleModelMixin
+from .utils import UserSalePermissionMixin
 
 
 class SaleListView(CustomLoginRequiredMixin, ListView):
+    paginate_by = 15
     template_name = 'sale/sales.html'
     context_object_name = 'sales'
     extra_context = {'title': 'Sales'}
@@ -19,24 +20,28 @@ class SaleListView(CustomLoginRequiredMixin, ListView):
         return Sale.objects.filter(user_id=self.request.user.pk).select_related('product')
 
 
-class SaleDetailView(CustomLoginRequiredMixin, SaleModelMixin, DetailView):
+class SaleDetailView(CustomLoginRequiredMixin, UserSalePermissionMixin, DetailView):
+    model = Sale
     template_name = 'sale/detail.html'
     context_object_name = 'detail'
     extra_context = {'title': 'Edit Sale'}
 
 
-class SaleCreateView(CustomLoginRequiredMixin, SaleModelMixin, CurrentUserMixin, UserProductsMixin, CreateView):
+class SaleCreateView(CustomLoginRequiredMixin, CurrentUserMixin, UserProductsMixin, CreateView):
+    model = Sale
     form_class = SaleCreateForm
     template_name = 'sale/create.html'
     extra_context = {'title': 'New Sale'}
 
 
-class SaleUpdateView(CustomLoginRequiredMixin, SaleModelMixin, UserProductsMixin, UpdateView):
+class SaleUpdateView(CustomLoginRequiredMixin, UserProductsMixin, UserSalePermissionMixin, UpdateView):
+    model = Sale
     form_class = SaleUpdateForm
     template_name = 'sale/update.html'
     extra_context = {'title': 'Edit'}
 
 
-class SaleDeleteView(CustomLoginRequiredMixin, SaleModelMixin, DeleteView):
+class SaleDeleteView(CustomLoginRequiredMixin, UserSalePermissionMixin, DeleteView):
+    model = Sale
     template_name = 'sale/detail.html'
     success_url = reverse_lazy('sales')
