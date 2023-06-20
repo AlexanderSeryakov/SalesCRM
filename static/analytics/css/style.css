@@ -1,0 +1,14 @@
+.header__inner{
+    display: flex;
+    justify-content: space-between;
+    max-height: 500px;
+}
+
+.header__inner_text, .header__inner_pie{
+    margin-top: 50px;
+}
+
+#pie, #pieSale{
+    min-width: 400px;
+    min-height: 400px;
+}

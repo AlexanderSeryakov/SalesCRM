@@ -1,63 +1,196 @@
 {% extends 'common/base.html' %}
 {% load static %}
 
-{% block header %}
-<!--    <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.min.js"></script>-->
+{% block head %}
+<link rel="stylesheet" href="{% static 'analytics/css/style.css' %}">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+
+
 {% endblock %}
 
 {% block content %}
-<a href="{% url 'sales' %}"><img class="custom_arrow" src="{% static 'common/images/arrow-left.png' %}" alt="left"></a>
 <div class="container">
-    <canvas id="myChart"></canvas>
-    <canvas id="chart"></canvas>
+    <br>
+    <h3>Статистика за период: {{time_start|date:"d-m-Y"}} : {{time_end|date:"d-m-Y"}}</h3>
+
+    <form method="post" action="{% url 'view_period'%}">
+        {% csrf_token %}
+        <div class="custom-form-error form-label">{{ form.non_field_errors }}</div>
+        {% for f in form %}
+        <label class="form-label" for="{{ f.id_for_label }}">{{f.label}}</label>
+        <p>{{ f }}</p>
+        <div class="form-label">{{ f.errors }}</div>
+
+        {% endfor %}
+        <button class="btn btn-success">Показать</button>
+    </form>
+
+    <div class="header__inner">
+        <div class="header__inner_pie">
+            <canvas id="pie"></canvas>
+        </div>
+        <div class="header__inner_pie">
+            <canvas id="pieSale"></canvas>
+        </div>
+        <div class="header__inner_text">
+        </div>
+    </div>
+
+    <canvas id="myChart" style="width:250px;height:150px"></canvas>
 </div>
 
 
 <script>
+  Chart.register(ChartDataLabels);
+
   const ctx = document.getElementById('myChart');
 
   new Chart(ctx, {
     type: 'bar',
     data: {
       labels: [{%for d in data_set%}'{{d.product__name}}',{%endfor%}],
-      datasets: [{
-        label: 'price',
+      datasets: [
+      {
+        label: 'Total score',
+        backgroundColor: "#d63a3a",
         data: [{%for d in data_set%}'{{d.total_sum}}',{%endfor%}],
+        borderWidth: 1,
+
+      },{
+        label: 'Total score with discount',
+        backgroundColor: "#4950d6",
+        data: [{%for d in data_set%}'{{d.total_sum_with_discount}}',{%endfor%}],
         borderWidth: 1
       }]
     },
     options: {
-      scales: {
-        y: {
-          beginAtZero: true
+        plugins: {
+            title: {
+                display: true,
+                text: 'Статистика по продажам за выбранный период.',
+            },
+            datalabels: {
+                color: '#f5f3ed',
+                clamp: true,
+                anchor: 'center',
+                labels: {
+                    title: {
+                        font: {
+                            weight: 'bold',
+                        }
+                    }
+                }
+            }
         }
-      }
     }
   });
 
-  let ctx1 = document.getElementById("chart").getContext("2d");
 
-  let chart = new Chart(ctx1, {
-  type: "bar",
-  data: {
-     labels: ["2020/Q1", "2020/Q2", "2020/Q3", "2020/Q4"],
-     datasets: [
-        {
-          label: "Gross volume ($)",
-          backgroundColor: "#79AEC8",
-          borderColor: "#417690",
-          data: [26900, 28700, 27300, 29200]
+  const pieCtx = document.getElementById('pie');
+
+  new Chart(pieCtx, {
+      type: 'pie',
+      data: {
+        labels: [{%for d in data_set%}'{{d.product__name}}',{%endfor%}],
+        datasets: [{
+            label: 'Количество',
+            data: [{%for d in data_set%} {{d.total_quantity_all}},{%endfor%}],
+            backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)',
+            'rgb(255, 100, 97)',
+            'rgb(186, 255, 152)',
+            'rgb(91, 90, 214)',
+            'rgb(32, 138, 127)',
+            'rgb(175, 178, 240)',
+            ],
+            hoverOffset: 4 }]
+      },
+      options: {
+        plugins: {
+            legend: {
+                display: true,
+                labels: {
+                    color: 'rgb(80, 87, 85)',
+                },
+                position: 'left',
+            },
+            title: {
+                display: true,
+                text: 'Всего проданных товаров за период.',
+                padding: {
+                    bottom: 0,
+                }
+            },
+            datalabels: {
+                color: '#ffffff',
+                labels: {
+                    title: {
+                        font: {
+                            weight: 'bold',
+                        }
+                    },
+                }
+
+            }
         }
-     ]
-  },
-  options: {
-     title: {
-        text: "Gross Volume in 2020",
-        display: true
-     }
-  }
-});
+    }
+  })
+
+  const pieSaleCtx = document.getElementById('pieSale');
+
+  new Chart(pieSaleCtx, {
+      type: 'pie',
+      data: {
+        labels: [{%for d in data_set%}'{{d.product__name}}',{%endfor%}],
+        datasets: [{
+            label: 'Количество',
+            data: [{%for d in data_set%} {{d.total_quantity}},{%endfor%}],
+            backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)',
+            'rgb(255, 100, 97)',
+            'rgb(186, 255, 152)',
+            'rgb(91, 90, 214)',
+            'rgb(32, 138, 127)',
+            'rgb(175, 178, 240)',
+            ],
+            hoverOffset: 4 }]
+      },
+      options: {
+        plugins: {
+            legend: {
+                display: true,
+                labels: {
+                    color: 'rgb(80, 87, 85)',
+                },
+                position: 'left',
+            },
+            title: {
+                display: true,
+                text: 'Отдельных продаж с каждым товаром за период.',
+                padding: {
+                    bottom: 0,
+                }
+            },
+            datalabels: {
+                color: '#ffffff',
+                labels: {
+                    title: {
+                        font: {
+                            weight: 'bold',
+                        }
+                    },
+                }
+
+            }
+        }
+    }
+  })
+
 
 </script>
 
