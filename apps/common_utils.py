@@ -21,7 +21,7 @@ class UserProductsMixin:
     Mixin to get the products of the current user.
     Adds a new 'product' ModelChoiceField field to the form or overrides
     a hidden 'product' field.
-    Use it with CreateView, UpdateView inheritors.
+    Use it with CreateView, UpdateView subclasses.
     """
     def get_form(self, form_class=None):
         if form_class is None:
