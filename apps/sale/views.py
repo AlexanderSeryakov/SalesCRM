@@ -1,4 +1,6 @@
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.contrib import messages
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
@@ -45,3 +47,9 @@ class SaleDeleteView(CustomLoginRequiredMixin, UserSalePermissionMixin, DeleteVi
     model = Sale
     template_name = 'sale/detail.html'
     success_url = reverse_lazy('sales')
+
+    def form_valid(self, form):
+        success_url = self.get_success_url()
+        self.object.delete()
+        messages.success(self.request, 'Продажа успешно удалёна!')
+        return HttpResponseRedirect(success_url)

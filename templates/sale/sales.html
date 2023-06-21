@@ -2,7 +2,15 @@
 {% load static %}
 
 {% block content %}
+
 <br>
+{% for message in messages %}
+<div class="alert {{message.tags}} alert-dismissible" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
 <a href="{% url 'new_sale' %}" class="btn btn-primary">Add Sale</a>
 <br>
 <br>
@@ -11,11 +19,12 @@
     <tr>
         <th scope="col">ID</th>
         <th scope="col">Product Name</th>
-        <th scope="col">Price</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Total score</th>
-        <th scope="col">Discount</th>
-        <th scope="col">Customer</th>
+        <th scope="col">Закуп. цена</th>
+        <th scope="col">Рознич. цена</th>
+        <th scope="col">Количество</th>
+        <th scope="col">Общая прибыль</th>
+        <th scope="col">Чистая прибыль</th>
+        <th scope="col">Размер скидки</th>
         <th scope="col">Phone</th>
         <th scope="col">Date</th>
     </tr>
@@ -25,13 +34,18 @@
     <tr>
         <td scope="row"><a href="{{ sale.get_absolute_url }}">{{sale.id}}</a></td>
         <td><a href="{{sale.product.get_absolute_url}}">{{sale.product.name}}</a></td>
-        <td>{{sale.product.price|floatformat:"2"}}</td>
+        <td>{{sale.product.purchase_price|floatformat:"2"}}</td>
+        <td>{{sale.product.retail_price|floatformat:"2"}}</td>
         <td>{{sale.quantity}}</td>
         <td>{{sale.get_total_score|floatformat:"2"}}</td>
+        <td>{{sale.get_clean_total_score|floatformat:"2"}}</td>
         <td>{{sale.discount|floatformat:"0"}} %</td>
-        <td>{{sale.customer_name}}</td>
-        <td>{{sale.customer_phone}}</td>
-        <td>{{sale.created_at|date:"j E Y"}}</td>
+        {% if sale.customer_phone %}
+            <td>{{sale.customer_phone}}</td>
+        {% else %}
+            <td>&#8722;</td>
+        {% endif %}
+        <td>{{sale.created_at|date:"j-m-Y"}}</td>
     </tr>
     {% endfor %}
     </tbody>

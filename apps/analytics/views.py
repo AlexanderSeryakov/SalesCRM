@@ -1,13 +1,14 @@
 from datetime import datetime
 
 from django.db.models import Sum, F, Count
+from django.db.models.functions import Round
 from django.shortcuts import render, redirect
 
 from apps.sale.models import Sale
 from .forms import MyDateInput
 
 
-def home(request, time_range=None):
+def analytics_view(request, time_range=None):
     """<QuerySet [{'product__name': 'Window', 'total_quantity': 1, 'total_sum': 84000.0, 'total_sum_with_discount':
     83160.0}, ...]>
     """
@@ -22,8 +23,10 @@ def home(request, time_range=None):
         .values('product__name')
         .annotate(total_quantity=Count(F('product__name')),
                   total_quantity_all=Sum(F('quantity')),
-                  total_sum=Sum(F('product__price') * F('quantity')),
-                  total_sum_with_discount=Sum(F('product__price') * F('quantity') * (1 - F('discount') / 100)))
+                  total_score=Sum(F('product__retail_price') * F('quantity')),
+                  total_score_cleaned=Sum(F('product__retail_price') *
+                                          F('quantity') * (1 - F('discount') / 100)) - Sum(
+                      F('product__purchase_price') * F('quantity')))
         .order_by('-total_quantity')
     )
 
@@ -34,7 +37,6 @@ def home(request, time_range=None):
 
 
 def view_period(request):
-
     start_date = request.POST['start_date']
     end_date = request.POST['end_date']
-    return home(request, time_range=[start_date, end_date])
+    return analytics_view(request, time_range=[start_date, end_date])

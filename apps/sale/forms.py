@@ -8,15 +8,16 @@ class SaleUpdateForm(forms.ModelForm):
         This for used in SaleUpdateView.
     """
     product = forms.HiddenInput()
-    customer_name = forms.CharField(label='Customer Name', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    customer_phone = forms.CharField(label='Customer phone', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    quantity = forms.IntegerField(label='Quantity', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    discount = forms.IntegerField(label='Discount', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    notes = forms.CharField(label='Comments', widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}))
+    customer_phone = forms.CharField(label='Номер телефона', required=False,
+                                     widget=forms.TextInput(attrs={'class': 'form-control'}))
+    quantity = forms.IntegerField(label='Количество', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    discount = forms.IntegerField(label='Скидка', widget=forms.TextInput(attrs={'class': 'form-control'}),
+                                  required=False, initial=0)
+    notes = forms.CharField(label='Доп.заметки', widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}))
 
     class Meta:
         model = Sale
-        fields = ('product', 'customer_name', 'customer_phone', 'quantity', 'discount', 'notes')
+        fields = ('product', 'customer_phone', 'quantity', 'discount', 'notes')
 
 
 class SaleCreateForm(SaleUpdateForm):

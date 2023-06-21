@@ -27,7 +27,7 @@ class UserProductsMixin:
         if form_class is None:
             form_class = self.get_form_class()
         form = form_class(**self.get_form_kwargs())
-        form.fields['product'] = forms.ModelChoiceField(label='Product',
+        form.fields['product'] = forms.ModelChoiceField(label='Товар',
                                                         queryset=Product.objects.filter(user_id=self.request.user.pk,
                                                                                         in_stock=True),
                                                         widget=forms.Select(attrs={'class': 'form-select'}))

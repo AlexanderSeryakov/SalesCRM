@@ -26,6 +26,7 @@
         <button class="btn btn-success">Показать</button>
     </form>
 
+    {% if data_set %}
     <div class="header__inner">
         <div class="header__inner_pie">
             <canvas id="pie"></canvas>
@@ -36,8 +37,14 @@
         <div class="header__inner_text">
         </div>
     </div>
-
     <canvas id="myChart" style="width:250px;height:150px"></canvas>
+    {% else %}
+    <br>
+    <div class="alert alert-warning" role="alert">
+        За указанный период нет продаж. Пожалуйста, выберите другой период.
+    </div>
+    {% endif %}
+
 </div>
 
 
@@ -52,15 +59,15 @@
       labels: [{%for d in data_set%}'{{d.product__name}}',{%endfor%}],
       datasets: [
       {
-        label: 'Total score',
+        label: 'Общая прибыль',
         backgroundColor: "#d63a3a",
-        data: [{%for d in data_set%}'{{d.total_sum}}',{%endfor%}],
+        data: [{%for d in data_set%}{{d.total_score|floatformat:2}},{%endfor%}],
         borderWidth: 1,
 
       },{
-        label: 'Total score with discount',
+        label: 'Чистая прибыль',
         backgroundColor: "#4950d6",
-        data: [{%for d in data_set%}'{{d.total_sum_with_discount}}',{%endfor%}],
+        data: [{%for d in data_set%}{{d.total_score_cleaned|floatformat:2}},{%endfor%}],
         borderWidth: 1
       }]
     },
@@ -71,6 +78,9 @@
                 text: 'Статистика по продажам за выбранный период.',
             },
             datalabels: {
+                formatter: function(value, context) {
+                    return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                },
                 color: '#f5f3ed',
                 clamp: true,
                 anchor: 'center',
@@ -190,6 +200,7 @@
         }
     }
   })
+
 
 
 </script>

@@ -8,13 +8,17 @@
     <div class="card">
         <h5 class="card-header">{{detail.product.name}} | id: {{detail.id}}</h5>
         <div class="card-body">
-            <p class="card-text"><strong>Customer Name: </strong>{{detail.customer_name}}</p>
-            <p class="card-text"><strong>Customer Phone: </strong>{{detail.customer_phone}}</p>
-            <p class="card-text"><strong>Quantity: </strong>{{detail.quantity}}</p>
-            <p class="card-text"><strong>Price: </strong>{{detail.product.price}}</p>
-            <p class="card-text"><strong>Discount: </strong>{{detail.discount}}</p>
-            <p class="card-text"><strong>Total Score: </strong>{{detail.get_total_score}}</p>
-            <p class="card-text"><strong>Sale date: </strong>{{detail.created_at}}</p>
+            <p class="card-text"><strong>Закупочная цена: </strong>{{detail.product.purchase_price|floatformat:"2"}}
+                руб.</p>
+            <p class="card-text"><strong>Розничная цена: </strong>{{detail.product.retail_price|floatformat:"2"}} руб.
+            </p>
+            <p class="card-text"><strong>Количество: </strong>{{detail.quantity}} шт.</p>
+            <p class="card-text"><strong>Скидка: </strong>{{detail.discount}} %</p>
+            <p class="card-text"><strong>Общая прибыль: </strong>{{detail.get_total_score|floatformat:"2"}} руб.</p>
+            <p class="card-text"><strong>Чистая прибыль: </strong>{{detail.get_clean_total_score|floatformat:"2"}} руб.
+            </p>
+            <p class="card-text"><strong>Дата продажи: </strong>{{detail.created_at|date:"d-m-Y"}}</p>
+            <p class="card-text"><strong>Доп.заметки: </strong></p>
             <div class="card-body">
                 {{detail.notes}}
             </div>

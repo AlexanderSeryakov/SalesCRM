@@ -4,15 +4,18 @@ from .models import Product
 
 
 class ProductUpdateForm(forms.ModelForm):
-    name = forms.CharField(label='Product Name', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    price = forms.DecimalField(label='Price', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    in_stock = forms.BooleanField(label='In Stock: ',
+    name = forms.CharField(label='Наименование', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    purchase_price = forms.DecimalField(label='Закупочная стоимость',
+                                        widget=forms.TextInput(attrs={'class': 'form-control'}))
+    retail_price = forms.DecimalField(label='Розничная стоимость',
+                                      widget=forms.TextInput(attrs={'class': 'form-control'}))
+    in_stock = forms.BooleanField(label='В наличии: ',
                                   widget=forms.CheckboxInput(attrs={'class': 'form-check'}), required=False)
-    notes = forms.CharField(label='Description', widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}))
+    notes = forms.CharField(label='Доп.заметки', widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}))
 
     class Meta:
         model = Product
-        fields = ('name', 'price', 'in_stock', 'notes')
+        fields = ('name', 'purchase_price', 'retail_price', 'in_stock', 'notes')
 
 
 class ProductCreateForm(ProductUpdateForm):

@@ -7,10 +7,9 @@ from apps.product.models import Product
 
 class Sale(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT, blank=True, null=True)
-    quantity = models.IntegerField(default=1)
-    discount = models.FloatField(default=0, null=True, blank=True)
-    customer_name = models.CharField(max_length=512)
-    customer_phone = models.CharField(max_length=20)
+    quantity = models.IntegerField(null=False, blank=False)
+    discount = models.IntegerField(null=False, blank=False)
+    customer_phone = models.CharField(max_length=20, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     notes = models.TextField(blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, db_index=True)
@@ -26,5 +25,10 @@ class Sale(models.Model):
 
     @property
     def get_total_score(self):
-        total = self.product.price * self.quantity
+        total = self.product.retail_price * self.quantity
         return total - total * (self.discount / 100)
+
+    @property
+    def get_clean_total_score(self):
+        total = self.product.purchase_price * self.quantity
+        return self.get_total_score - total

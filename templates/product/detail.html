@@ -9,18 +9,19 @@
     <div class="card">
         <h5 class="card-header">{{product.name}} | id: {{product.id}}</h5>
         <div class="card-body">
-            <p class="card-text"><strong>Name: </strong>{{product.name}}</p>
-            <p class="card-text"><strong>Price: </strong>{{product.price}}</p>
-            <p class="card-text"><strong>In Stock: </strong>{{product.in_stock}}</p>
-            <p class="card-text"><strong>Description: </strong>{{product.notes}}</p>
+            <p class="card-text"><strong>Наименование: </strong>{{product.name}}</p>
+            <p class="card-text"><strong>Закупочная цена: </strong>{{product.purchase_price}}</p>
+            <p class="card-text"><strong>Розничная цена: </strong>{{product.retail_price}}</p>
+            <p class="card-text"><strong>В наличии: </strong>{{product.in_stock}}</p>
+            <p class="card-text"><strong>Доп.заметки: </strong>{{product.notes}}</p>
         </div>
     </div>
     <br>
     <div class="wrapper">
-        <a class="btn btn-primary" href="{% url 'product_update' product.pk %}">Edit</a>
+        <a class="btn btn-primary" href="{% url 'product_update' product.pk %}">Изменить</a>
         <form style="display:inline" method="POST" action="{% url 'product_delete' product.pk %}">
             {% csrf_token %}
-            <input type="submit" value="Delete" class="btn btn-danger">
+            <input type="submit" value="Удалить" class="btn btn-danger">
         </form>
     </div>
 </div>
