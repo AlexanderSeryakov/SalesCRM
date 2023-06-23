@@ -26,6 +26,10 @@ class Sale(models.Model):
         return reverse('detail', kwargs={'pk': self.pk})
 
     @property
+    def get_product_name(self):
+        return self.product.name
+
+    @property
     def get_total_score(self):
         return get_total(retail_price=self.product.retail_price,
                          quantity=self.quantity,

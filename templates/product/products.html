@@ -29,16 +29,16 @@
     <tr class="table-success">
         <td scope="row"><a href="{{ p.get_absolute_url }}">{{p.id}}</a></td>
         <td>{{p.name}}</td>
-        <td>{{p.purchase_price|floatformat:"2"}}</td>
-        <td>{{p.retail_price|floatformat:"2"}}</td>
+        <td>{{p.purchase_price|floatformat:"2"}} руб.</td>
+        <td>{{p.retail_price|floatformat:"2"}} руб.</td>
         <td>&#43;</td>
     </tr>
     {% else %}
     <tr class="table-secondary">
         <td scope="row"><a href="{{ p.get_absolute_url }}">{{p.id}}</a></td>
         <td>{{p.name}}</td>
-        <td>{{p.purchase_price|floatformat:"2"}}</td>
-        <td>{{p.retail_price|floatformat:"2"}}</td>
+        <td>{{p.purchase_price|floatformat:"2"}} руб.</td>
+        <td>{{p.retail_price|floatformat:"2"}} руб.</td>
         <td>&#8722;</td>
     </tr>
     {% endif %}

@@ -1,8 +1,7 @@
 from django.urls import path
 
-from .views import analytics_view, view_period
+from .views import AnalyticsView
 
 urlpatterns = [
-    path('', analytics_view, name='analytics'),
-    path('view_period/', view_period, name='view_period'),
+    path('', AnalyticsView.as_view(), name='analytics'),
 ]

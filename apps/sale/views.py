@@ -13,7 +13,7 @@ from .models import Sale
 
 
 class SaleListView(CustomLoginRequiredMixin, ListView):
-    paginate_by = 15
+    paginate_by = 10
     template_name = 'sale/sales.html'
     context_object_name = 'sales'
     extra_context = {'title': 'Sales'}

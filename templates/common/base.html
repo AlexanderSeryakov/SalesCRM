@@ -22,47 +22,7 @@
     {% block content %}
     {% endblock %}
 
-    {% if page_obj.has_other_pages %}
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-
-            <li class="page-item">
-                {% if page_obj.has_previous %}
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-                {% else %}
-                <p class="page-link non-select" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </p>
-                {% endif %}
-            </li>
-
-            {% for p in paginator.page_range %}
-
-            {% if page_obj.number == p %}
-            <li class="page-item active" aria-current="page">
-                <span class="page-link">{{ p }}</span>
-            </li>
-            {% else %}
-            <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
-            {% endif %}
-            {% endfor %}
-
-            <li class="page-item">
-                {% if page_obj.has_next %}
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-                {% else %}
-                <p class="page-link non-select" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </p>
-                {% endif %}
-            </li>
-        </ul>
-    </nav>
-    {% endif %}
+    {% include 'common/pagination.html' %}
 
 </div>
 

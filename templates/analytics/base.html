@@ -5,8 +5,6 @@
 <link rel="stylesheet" href="{% static 'analytics/css/style.css' %}">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-
-
 {% endblock %}
 
 {% block content %}
@@ -14,7 +12,7 @@
     <br>
     <h3>Статистика за период: {{time_start|date:"d-m-Y"}} : {{time_end|date:"d-m-Y"}}</h3>
 
-    <form method="post" action="{% url 'view_period'%}">
+    <form method="post" action="{% url 'analytics'%}">
         {% csrf_token %}
         <div class="custom-form-error form-label">{{ form.non_field_errors }}</div>
         {% for f in form %}
@@ -29,7 +27,7 @@
     {% if data_set %}
     <div class="header__inner">
         <div class="header__inner_text">
-            asdjasas
+
         </div>
     </div>
     <div class="detail__content">
@@ -42,6 +40,7 @@
         <div>
         </div>
     </div>
+
     <canvas id="myChart" style="width:250px;height:150px"></canvas>
 
     {% else %}
@@ -59,6 +58,18 @@
 
   const ctx = document.getElementById('myChart');
 
+  const customGcgPlugin = {
+    id: 'customCanvasBackgroundColor',
+    beforeDraw: (chart, args, options) => {
+        const {ctx} = chart;
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-over';
+        ctx.fillStyle = options.color || '#99ffff';
+        ctx.fillRect(0, 0, chart.width, chart.height);
+        ctx.restore();
+    }
+  };
+
   new Chart(ctx, {
     type: 'bar',
     data: {
@@ -66,7 +77,7 @@
       datasets: [
       {
         label: 'Общая прибыль',
-        backgroundColor: "#d63a3a",
+        backgroundColor: "#532687",
         data: [{%for d in data_set%}{{d.total_score|floatformat:2}},{%endfor%}],
         borderWidth: 1,
 
@@ -85,9 +96,9 @@
             },
             datalabels: {
                 formatter: function(value, context) {
-                    return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    return value.toFixed(1).replace(/\d(?=(\d{3})+\.)/g, '$&,');
                 },
-                color: '#f5f3ed',
+                color: '#ffffff',
                 clamp: true,
                 anchor: 'center',
                 labels: {
@@ -97,9 +108,13 @@
                         }
                     }
                 }
+            },
+            customCanvasBackgroundColor: {
+                color: '#f7f7f0',
             }
         }
-    }
+    },
+    plugins: [customGcgPlugin],
   });
 
 
@@ -206,12 +221,6 @@
         }
     }
   })
-
-
-
-
-
-
 </script>
 
 {% endblock %}

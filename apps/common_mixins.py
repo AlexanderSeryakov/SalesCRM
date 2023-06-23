@@ -5,7 +5,7 @@ from apps.product.models import Product
 
 
 class CurrentUserMixin:
-    """ Mixin for hand-over current user and append user-object in kwargs.
+    """ Mixin for hand-over current user and append user-object in form kwargs.
         Use it in child-class of CreateView only!
      """
     def get_form_kwargs(self):
