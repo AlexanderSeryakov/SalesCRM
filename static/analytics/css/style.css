@@ -1,4 +1,4 @@
-.header__inner{
+.header__inner, .detail__content{
     display: flex;
     justify-content: space-between;
     max-height: 500px;
@@ -9,6 +9,6 @@
 }
 
 #pie, #pieSale{
-    min-width: 400px;
-    min-height: 400px;
+    min-width: 300px;
+    min-height: 300px;
 }

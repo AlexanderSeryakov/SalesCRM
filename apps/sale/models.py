@@ -4,6 +4,8 @@ from django.urls import reverse
 
 from apps.product.models import Product
 
+from .utils import get_total, get_total_cleaned
+
 
 class Sale(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT, blank=True, null=True)
@@ -25,10 +27,15 @@ class Sale(models.Model):
 
     @property
     def get_total_score(self):
-        total = self.product.retail_price * self.quantity
-        return total - total * (self.discount / 100)
+        return get_total(retail_price=self.product.retail_price,
+                         quantity=self.quantity,
+                         discount=self.discount
+                         )
 
     @property
     def get_clean_total_score(self):
-        total = self.product.purchase_price * self.quantity
-        return self.get_total_score - total
+        return get_total_cleaned(retail_price=self.product.retail_price,
+                                 purchase_price=self.product.purchase_price,
+                                 quantity=self.quantity,
+                                 discount=self.discount,
+                                 )

@@ -4,12 +4,12 @@ from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
-from apps.common_utils import CurrentUserMixin, CustomLoginRequiredMixin
+from apps.common_mixins import CurrentUserMixin, CustomLoginRequiredMixin
 from apps.sale.models import Sale
 
 from .forms import ProductCreateForm, ProductUpdateForm
+from .mixins import UserProductPermissionMixin
 from .models import Product
-from .utils import UserProductPermissionMixin
 
 
 class ProductListView(CustomLoginRequiredMixin, ListView):

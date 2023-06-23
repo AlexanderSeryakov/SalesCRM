@@ -1,15 +1,15 @@
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.contrib import messages
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
-from apps.common_utils import (CurrentUserMixin, CustomLoginRequiredMixin,
-                               UserProductsMixin)
+from apps.common_mixins import (CurrentUserMixin, CustomLoginRequiredMixin,
+                                UserProductsMixin)
 
 from .forms import SaleCreateForm, SaleUpdateForm
+from .mixins import UserSalePermissionMixin
 from .models import Sale
-from .utils import UserSalePermissionMixin
 
 
 class SaleListView(CustomLoginRequiredMixin, ListView):

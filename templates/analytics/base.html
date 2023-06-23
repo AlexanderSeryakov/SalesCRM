@@ -28,16 +28,22 @@
 
     {% if data_set %}
     <div class="header__inner">
+        <div class="header__inner_text">
+            asdjasas
+        </div>
+    </div>
+    <div class="detail__content">
         <div class="header__inner_pie">
             <canvas id="pie"></canvas>
         </div>
         <div class="header__inner_pie">
             <canvas id="pieSale"></canvas>
         </div>
-        <div class="header__inner_text">
+        <div>
         </div>
     </div>
     <canvas id="myChart" style="width:250px;height:150px"></canvas>
+
     {% else %}
     <br>
     <div class="alert alert-warning" role="alert">
@@ -200,6 +206,9 @@
         }
     }
   })
+
+
+
 
 
 
