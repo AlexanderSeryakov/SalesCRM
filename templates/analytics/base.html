@@ -25,11 +25,56 @@
     </form>
 
     {% if data_set %}
-    <div class="header__inner">
-        <div class="header__inner_text">
 
+    <div class="total__profit">
+        <div class="total__profit_pie">
+            <canvas id="pieTotal"></canvas>
+        </div>
+        <div class="total__profit_top">
+            <div class="total__profit_content">
+                <div class="content-card">
+                    <div class="total__profitt_title">
+                        <strong>5 самых продаваемых товаров:</strong>
+                    </div>
+                    <br>
+                    <div class="total__profit_content">
+                        <ul class="list-group">
+                            {% for sale in top_sales %}
+                            <li class="list-group-item"><strong>{{sale.product__name}}:</strong>
+                                {{sale.total_quantity_all}}
+                                шт.
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <div class="total__profitt_title">
+                        <strong>Товары с наибольшей чистой прибылью:</strong>
+                    </div>
+                    <br>
+                    <div class="total__profit_content">
+                        <ul class="list-group">
+                            {% for sale in top_profit %}
+                            <li class="list-group-item"><strong>{{sale.product__name}}:</strong>
+                                {{sale.total_score_cleaned|floatformat:2}} руб.
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="total__profit_descr">
+                В этом блоке показана статистика для 5 самых продаваемых товаров,
+                а также для 5 товаров, чистая прибыль от которых максимальна относительно других продаж.
+                Более подробная статистика по доходу с каждого Вашего товара находится ниже на этой странице.
+            </div>
         </div>
     </div>
+
     <div class="detail__content">
         <div class="header__inner_pie">
             <canvas id="pie"></canvas>
@@ -77,13 +122,13 @@
       datasets: [
       {
         label: 'Общая прибыль',
-        backgroundColor: "#532687",
+        backgroundColor: "#B587FA",
         data: [{%for d in data_set%}{{d.total_score|floatformat:2}},{%endfor%}],
         borderWidth: 1,
 
       },{
         label: 'Чистая прибыль',
-        backgroundColor: "#4950d6",
+        backgroundColor: "#536DBD",
         data: [{%for d in data_set%}{{d.total_score_cleaned|floatformat:2}},{%endfor%}],
         borderWidth: 1
       }]
@@ -93,6 +138,9 @@
             title: {
                 display: true,
                 text: 'Статистика по продажам за выбранный период.',
+                font: {
+                    size: 18,
+                },
             },
             datalabels: {
                 formatter: function(value, context) {
@@ -105,12 +153,13 @@
                     title: {
                         font: {
                             weight: 'bold',
+                            size: 10,
                         }
                     }
                 }
             },
             customCanvasBackgroundColor: {
-                color: '#f7f7f0',
+                color: '#f0efed',
             }
         }
     },
@@ -153,7 +202,10 @@
                 text: 'Всего проданных товаров за период.',
                 padding: {
                     bottom: 0,
-                }
+                },
+                font: {
+                  size: 18,
+                },
             },
             datalabels: {
                 color: '#ffffff',
@@ -205,7 +257,10 @@
                 text: 'Отдельных продаж с каждым товаром за период.',
                 padding: {
                     bottom: 0,
-                }
+                },
+                font: {
+                    size: 18,
+                },
             },
             datalabels: {
                 color: '#ffffff',
@@ -220,7 +275,69 @@
             }
         }
     }
-  })
+  });
+
+  const pieTotalCtx = document.getElementById('pieTotal');
+
+  new Chart(pieTotalCtx, {
+      type: 'pie',
+      data: {
+        labels: ['Общая прибыль', 'Общая чистая прибыль', 'Всего к уплате налогов'],
+        datasets: [{
+            label: 'Счёт',
+            data: {{total_values}},
+            backgroundColor: [
+            '#B587FA',
+            '#536DBD',
+            '#EBC183',
+            'rgb(255, 205, 86)',,
+            ],
+            hoverOffset: 7 }]
+      },
+      options: {
+        plugins: {
+            legend: {
+                display: true,
+                labels: {
+                    color: 'rgb(80, 87, 85)',
+                },
+                position: 'left',
+            },
+            title: {
+                display: true,
+                text: 'Общие доходы и налоги за период.',
+                padding: {
+                    bottom: 0,
+                },
+                font: {
+                    size: 18,
+                }
+            },
+            datalabels: {
+                formatter: function(value, context) {
+                    return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' руб.';
+                },
+                color: '#ffffff',
+                labels: {
+                    title: {
+                        font: {
+                            weight: 'bold',
+                        }
+                    },
+                }
+
+            }
+        }
+    }
+  });
+
+
+
+
+
+
+
+
 </script>
 
 {% endblock %}

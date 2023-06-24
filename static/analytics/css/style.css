@@ -1,14 +1,30 @@
-.header__inner, .detail__content{
+.header__inner, .detail__content, .total__profit, .total__profit_content{
     display: flex;
     justify-content: space-between;
     max-height: 500px;
 }
 
-.header__inner_text, .header__inner_pie{
+.header__inner_text, .header__inner_pie, .total__profit{
     margin-top: 50px;
 }
 
-#pie, #pieSale{
+#pie, #pieSale, #pieTotal{
     min-width: 300px;
     min-height: 300px;
+}
+
+.content-card{
+    margin-left: 20px;
+}
+
+.total__profitt_title{
+    max-width: 200px;
+}
+
+.total__profit_descr{
+    margin-top: 20px;
+    margin-left: 20px;
+    max-width: 450px;
+    font-weight: lighter;
+    font-size: 13px;
 }
