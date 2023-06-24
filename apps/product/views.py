@@ -15,7 +15,7 @@ from .models import Product
 class ProductListView(CustomLoginRequiredMixin, ListView):
     paginate_by = 10
     context_object_name = 'products'
-    extra_context = {'title': 'Products'}
+    extra_context = {'title': 'Мои товары'}
     template_name = 'product/products.html'
 
     def get_queryset(self):
@@ -25,7 +25,7 @@ class ProductListView(CustomLoginRequiredMixin, ListView):
 class ProductDetailView(CustomLoginRequiredMixin, UserProductPermissionMixin, DetailView):
     model = Product
     context_object_name = 'product'
-    extra_context = {'title': 'Product'}
+    extra_context = {'title': 'О товаре'}
     template_name = 'product/detail.html'
 
 
@@ -33,14 +33,14 @@ class ProductCreateView(CustomLoginRequiredMixin, CurrentUserMixin, CreateView):
     model = Product
     form_class = ProductCreateForm
     template_name = 'product/create.html'
-    extra_context = {'title': 'New Product'}
+    extra_context = {'title': 'Новый товар'}
 
 
 class ProductUpdateView(CustomLoginRequiredMixin, UserProductPermissionMixin, UpdateView):
     model = Product
     form_class = ProductUpdateForm
     template_name = 'product/update.html'
-    extra_context = {'title': 'Edit Product'}
+    extra_context = {'title': 'Редактировать товар'}
 
 
 class ProductDeleteView(CustomLoginRequiredMixin, UserProductPermissionMixin, DeleteView):

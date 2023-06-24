@@ -6,7 +6,7 @@
 <br>
 <a href="{% url 'sales' %}"><img class="custom_arrow" src="{% static 'common/images/arrow-left.png' %}" alt="left"></a>
 <div class="col-md-6 offset-md-3">
-    <h2>New Sale</h2>
+    <h2>Новая продажа</h2>
     <br>
     <form method="post">
         {% csrf_token %}
@@ -15,7 +15,7 @@
         <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}</label>{{ f }}</p>
         <div class="form-label">{{ f.errors }}</div>
         {% endfor %}
-        <input type="submit" value="Save" class="btn btn-success">
+        <input type="submit" value="Сохранить" class="btn btn-success">
     </form>
 </div>
 {% endblock %}

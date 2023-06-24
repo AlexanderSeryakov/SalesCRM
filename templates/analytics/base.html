@@ -10,17 +10,18 @@
 {% block content %}
 <div class="container">
     <br>
-    <h3>Статистика за период: {{time_start|date:"d-m-Y"}} : {{time_end|date:"d-m-Y"}}</h3>
+    <h2>Статистика за период: {{time_start|date:"d-m-Y"}} : {{time_end|date:"d-m-Y"}}</h2>
 
     <form method="post" action="{% url 'analytics'%}">
         {% csrf_token %}
         <div class="custom-form-error form-label">{{ form.non_field_errors }}</div>
+        <div class="date_input">
         {% for f in form %}
-        <label class="form-label" for="{{ f.id_for_label }}">{{f.label}}</label>
-        <p>{{ f }}</p>
-        <div class="form-label">{{ f.errors }}</div>
-
+            <label class="form-label" for="{{ f.id_for_label }}"><strong>{{f.label}}</strong></label>
+            {{ f }}
+            <div class="form-label">{{ f.errors }}</div>
         {% endfor %}
+        </div>
         <button class="btn btn-success">Показать</button>
     </form>
 
@@ -330,12 +331,6 @@
         }
     }
   });
-
-
-
-
-
-
 
 
 </script>

@@ -12,7 +12,13 @@
             <p class="card-text"><strong>Наименование: </strong>{{product.name}}</p>
             <p class="card-text"><strong>Закупочная цена: </strong>{{product.purchase_price}}</p>
             <p class="card-text"><strong>Розничная цена: </strong>{{product.retail_price}}</p>
-            <p class="card-text"><strong>В наличии: </strong>{{product.in_stock}}</p>
+            <p class="card-text"><strong>В наличии: </strong>
+                {% if product.in_stock %}
+                    Да
+                {% else %}
+                    Нет
+                {% endif %}
+            </p>
             <p class="card-text"><strong>Доп.заметки: </strong>{{product.notes}}</p>
         </div>
     </div>

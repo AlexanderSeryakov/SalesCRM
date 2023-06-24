@@ -8,6 +8,7 @@ urlpatterns = [
     path('auth/', include('apps.user_auth.urls')),
     path('analytics/', include('apps.analytics.urls')),
     path('product/', include('apps.product.urls')),
+    path('help/', include('apps.help.urls')),
 ]
 
 

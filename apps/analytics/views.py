@@ -9,7 +9,7 @@ from .utils import get_valid_data_for_template, get_total_profit_and_tax, get_to
 class AnalyticsView(View):
     template = 'analytics/base.html'
     date_form = MyDateInput()
-    title = 'Statistic'
+    title = 'Аналитика'
 
     def get(self, request):
         data_set = get_valid_data_for_template(self.request.user.pk)
