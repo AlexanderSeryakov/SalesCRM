@@ -56,7 +56,7 @@ MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
-ROOT_URLCONF = 'salescrm.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -82,7 +82,7 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 
-WSGI_APPLICATION = 'salescrm.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
@@ -146,5 +146,3 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# LOGIN_REDIRECT_URL = '/'
