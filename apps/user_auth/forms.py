@@ -23,27 +23,27 @@ class SignUpForm(UserCreationForm):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super(SignUpForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['class'] = 'form-control'
-        self.fields['username'].widget.attrs['placeholder'] = 'User Name'
+        self.fields['username'].widget.attrs['placeholder'] = 'Nickname'
         self.fields['username'].label = ''
         self.fields[
-            'username'].help_text = '<span class="form-text text-muted "><small>Required. 150 characters or fewer. ' \
-                                    'Letters, digits and @/./+/-/_ only.</small></span>'
+            'username'].help_text = '<span class="form-text text-muted "><small>Обязательное поле. ' \
+                                    '150 символов или меньше. Только латинские буквы, цифры и @/./+/-/_</small></span>'
 
         self.fields['password1'].widget.attrs['class'] = 'form-control'
-        self.fields['password1'].widget.attrs['placeholder'] = 'Password'
+        self.fields['password1'].widget.attrs['placeholder'] = 'Пароль'
         self.fields['password1'].label = ''
         self.fields[
-            'password1'].help_text = '<ul class="form-text text-muted small"><li>Your password can\'t be too similar ' \
-                                     'to your other personal information.</li><li>Your password must contain at least' \
-                                     ' 8 characters.</li><li>Your password can\'t be a commonly used password.' \
-                                     '</li><li>Your password can\'t be entirely numeric.</li></ul>'
+            'password1'].help_text = '<ul class="form-text text-muted small"><li>Пароль не должен содержать ' \
+                                     'личную информацию.</li><li>Пароль не может быть короче 8 символов.</li>' \
+                                     '<li>Не используйте распространённые пароли.' \
+                                     '</li><li>Пароль не может состоять только из цифр.</li></ul>'
 
         self.fields['password2'].widget.attrs['class'] = 'form-control'
-        self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
+        self.fields['password2'].widget.attrs['placeholder'] = 'Подтверджение пароля'
         self.fields['password2'].label = ''
         self.fields[
-            'password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, ' \
-                                     'for verification.</small></span>'
+            'password2'].help_text = '<span class="form-text text-muted"><small>Введите пароль для подтверджения' \
+                                     '</small></span>'
 
 
 class LoginUserForm(AuthenticationForm):

@@ -3,12 +3,12 @@
 {% block content %}
 <div class="col-md-6 offset-md-3">
     <br>
-    <h1>Sign Up</h1>
+    <h1>Регистрация</h1>
     <br>
     <form method="post">
     {% csrf_token %}
     {{ form.as_p}}
-        <button type="submit" class="btn btn-success">SignUp</button>
+        <button type="submit" class="btn btn-success">Зарегистрироваться</button>
     </form>
 </div>
 {% endblock %}

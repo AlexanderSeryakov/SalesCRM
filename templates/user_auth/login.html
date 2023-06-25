@@ -4,7 +4,7 @@
 
 <div class="col-md-6 offset-md-3">
     <br>
-    <h1>Log In</h1>
+    <h1>Вход</h1>
     <br>
     <form method="post">
     {% csrf_token %}
@@ -13,7 +13,7 @@
             <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}</label>{{ f }}</p>
             <div class="form-label">{{ f.errors }}</div>
         {% endfor %}
-        <button type="submit" class="btn btn-success">SignUp</button>
+        <button type="submit" class="btn btn-success">Войти</button>
     </form>
 </div>
 {% endblock %}
