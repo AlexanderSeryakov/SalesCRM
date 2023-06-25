@@ -11,7 +11,8 @@ class ProductUpdateForm(forms.ModelForm):
                                       widget=forms.TextInput(attrs={'class': 'form-control'}))
     in_stock = forms.BooleanField(label='В наличии: ',
                                   widget=forms.CheckboxInput(attrs={'class': 'form-check'}), required=False)
-    notes = forms.CharField(label='Доп.заметки', widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}))
+    notes = forms.CharField(label='Доп.заметки', widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+                            required=False)
 
     class Meta:
         model = Product

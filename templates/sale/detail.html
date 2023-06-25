@@ -26,10 +26,10 @@
     </div>
     <br>
     <div class="wrapper">
-        <a class="btn btn-primary" href="{% url 'sale_update' detail.pk %}">Edit</a>
+        <a class="btn btn-primary" href="{% url 'sale_update' detail.pk %}">Редактировать</a>
         <form style="display:inline" method="POST" action="{% url 'sale_delete' detail.pk %}">
             {% csrf_token %}
-            <input type="submit" value="Delete" class="btn btn-danger">
+            <input type="submit" value="Удалить" class="btn btn-danger">
         </form>
     </div>
 </div>

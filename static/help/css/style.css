@@ -1,0 +1,47 @@
+.help__header_title{
+	margin: 20px 0 20px 0;
+}
+
+.help__header_subtitle{
+	max-width: 450px;
+}
+
+.content__body{
+	display: flex;
+	justify-content: space-between;
+}
+
+.text_paragraph{
+	min-width: 500px;
+	margin-left: 20px;
+}
+
+.images{
+	margin: 30px 0 30px 30px;
+}
+
+.content__block{
+	margin: 20px 0 20px 0;
+}
+
+.content-img{
+	max-height: 450px;
+	max-width: 500px;
+	margin-bottom: 20px;
+}
+
+.content-img-big{
+	height: 200px;
+}
+
+.descr_link{
+	text-decoration: none;
+}
+
+.descr_link:hover{
+	color: #39405c;
+}
+
+.notes{
+	margin: 30px 0 30px;
+}
