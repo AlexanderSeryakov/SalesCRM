@@ -1,6 +1,12 @@
 def get_total(retail_price, quantity, discount):
     """ Calculate total profit for sale with discount """
-    return retail_price * quantity * (1 - discount / 100) if discount else retail_price * quantity
+    if discount == '0':
+        return retail_price * quantity
+    if '%' in discount:
+        discount = int(discount.replace('%', '')) / 100
+        return retail_price * quantity * (1 - discount)
+
+    return retail_price * quantity - float(discount)
 
 
 def get_total_cleaned(retail_price, quantity, discount, purchase_price):

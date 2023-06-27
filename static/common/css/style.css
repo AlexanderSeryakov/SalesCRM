@@ -91,7 +91,7 @@ th.sorted[data-order="1"]::after {
 }
 
 .custom-form-error{
-    color: red;
+    color: #f77c7c;
 }
 
 .custom_arrow{

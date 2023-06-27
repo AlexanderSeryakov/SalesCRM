@@ -32,6 +32,11 @@
 
 .content-img-big{
 	height: 200px;
+
+}
+
+.img-max-width{
+    max-width: 1200px;
 }
 
 .descr_link{

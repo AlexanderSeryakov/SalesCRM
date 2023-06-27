@@ -1,4 +1,6 @@
+import re
 from django import forms
+from django.core.exceptions import ValidationError
 
 from .models import Sale
 
@@ -8,16 +10,33 @@ class SaleUpdateForm(forms.ModelForm):
         This for used in SaleUpdateView.
     """
     product = forms.HiddenInput()
-    customer_phone = forms.CharField(label='Номер телефона', required=False,
-                                     widget=forms.TextInput(attrs={'class': 'form-control'}))
-    quantity = forms.IntegerField(label='Количество', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    discount = forms.IntegerField(label='Скидка', widget=forms.TextInput(attrs={'class': 'form-control'}),
-                                  required=False, initial=0)
-    notes = forms.CharField(label='Доп.заметки', widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}))
 
     class Meta:
         model = Sale
         fields = ('product', 'customer_phone', 'quantity', 'discount', 'notes')
+        widgets = {
+            'product': forms.TextInput(attrs={'class': 'form-control'}),
+            'customer_phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'quantity': forms.TextInput(attrs={'class': 'form-control'}),
+            'discount': forms.TextInput(attrs={'class': 'form-control'}),
+            'notes': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+        }
+
+    def clean_quantity(self):
+        quantity = self.cleaned_data['quantity']
+        if quantity > 0:
+            return quantity
+        raise ValidationError('Количество должно быть больше 0.')
+
+    def clean_discount(self):
+        discount = self.cleaned_data['discount']
+        if discount.count('%') > 1 or any(map(lambda sign: sign in discount, '-,./!@`~=\\|/?#$№;:*][}{)(<>')):
+            raise ValidationError('Укажите корректный формат скидки')
+        elif '%' in discount:
+            d = re.findall('\d+%', discount)
+            if len(d[0].replace('%', '')) > 2:
+                raise ValidationError('Укажите корректный формат скидки')
+        return discount
 
 
 class SaleCreateForm(SaleUpdateForm):

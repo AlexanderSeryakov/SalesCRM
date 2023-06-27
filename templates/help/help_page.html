@@ -107,7 +107,7 @@
                     После успешного создания нового товара, вы увидите его в разделе товаров.
                 </p>
                 <div class="images">
-                    <img class="content-img-big" src="{% static 'help/images/product_management_1.png' %}" alt="pic">
+                    <img class="content-img-big img-max-width" src="{% static 'help/images/product_management_1.png' %}" alt="pic">
                 </div>
                 <p class="text_paragraph">
                     Зелёным цветом выделены товары в наличии, серым, отсутствующие. Вы можете нажимать на заглавия
@@ -172,9 +172,10 @@
                     указывать.
                     Также это касается размера скидки. По умолчанию скидка равна 0, вы можете дополнительно указать, в
                     каком
-                    размере была предоставлена скидка. Важно, что размер скидки нужно указывать без символа
-                    <mark>%</mark>
-                    .
+                    размере была предоставлена скидка. Если скидка была предоставлена в процентах, то запишите в поле
+                    скидки значение с процентом, например <mark>15%</mark>, а если скидка была в рублях, к примеру,
+                    вы предоставили покупателю скидку на товар в 150 рублей, то просто впишите в поле скидка число, в данном
+                    случае <mark>150</mark>.
                 </p>
                 <div class="images">
                     <img class="" src="{% static 'help/images/add_sale_2.png' %}" alt="pic">
@@ -202,7 +203,7 @@
                     .
                 </p>
                 <div class="images">
-                    <img class="" src="{% static 'help/images/sale_management_1.png' %}" alt="pic">
+                    <img class="img-max-width" src="{% static 'help/images/sale_management_1.png' %}" alt="pic">
                 </div>
             </div>
         </div>
@@ -247,7 +248,7 @@
                     и показаны лишь общий размер налогов и общая чистая прибыль.
                 </p>
                 <div class="images">
-                    <img class="" src="{% static 'help/images/statistic_3.png' %}" alt="pic">
+                    <img class="img-max-width" src="{% static 'help/images/statistic_3.png' %}" alt="pic">
                 </div>
                 <p class="text_paragraph">
                     Вы можете навести курсор на интересующий вас пункт диаграммы для просмотра данных конкретно этого
@@ -263,8 +264,8 @@
                     продажи и доходы.
                 </p>
                 <div class="images">
-                    <img class="" src="{% static 'help/images/statistic_5.png' %}" alt="pic">
-                    <img class="" src="{% static 'help/images/statistic_6.png' %}" alt="pic">
+                    <img class="img-max-width" src="{% static 'help/images/statistic_5.png' %}" alt="pic">
+                    <img class="img-max-width" src="{% static 'help/images/statistic_6.png' %}" alt="pic">
                 </div>
             </div>
         </div>

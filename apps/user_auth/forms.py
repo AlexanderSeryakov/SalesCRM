@@ -15,10 +15,6 @@ class SignUpForm(UserCreationForm):
                                 widget=forms.TextInput(attrs={'class': 'form-control',
                                                               'placeholder': 'Joestar'}))
 
-    class Meta:
-        model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
-
     # override default widget attrs to custom
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super(SignUpForm, self).__init__(*args, **kwargs)
@@ -39,11 +35,15 @@ class SignUpForm(UserCreationForm):
                                      '</li><li>Пароль не может состоять только из цифр.</li></ul>'
 
         self.fields['password2'].widget.attrs['class'] = 'form-control'
-        self.fields['password2'].widget.attrs['placeholder'] = 'Подтверджение пароля'
+        self.fields['password2'].widget.attrs['placeholder'] = 'Подтвердите пароль'
         self.fields['password2'].label = ''
         self.fields[
-            'password2'].help_text = '<span class="form-text text-muted"><small>Введите пароль для подтверджения' \
+            'password2'].help_text = '<span class="form-text text-muted"><small>Введите пароль для подтверждения.' \
                                      '</small></span>'
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
 
 
 class LoginUserForm(AuthenticationForm):

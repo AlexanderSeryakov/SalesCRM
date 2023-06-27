@@ -4,11 +4,11 @@ from django.urls import reverse
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=512)
-    purchase_price = models.FloatField(null=False, blank=False)
-    retail_price = models.FloatField(null=False, blank=False)
-    in_stock = models.BooleanField(default=True)
-    notes = models.TextField(blank=True, null=True)
+    name = models.CharField(max_length=512, verbose_name='Наименование:')
+    purchase_price = models.FloatField(null=False, blank=False, verbose_name='Закупочная стоимость:')
+    retail_price = models.FloatField(null=False, blank=False, verbose_name='Розничная стоимость:')
+    in_stock = models.BooleanField(default=True, verbose_name='В налчии:')
+    notes = models.TextField(blank=True, null=True, verbose_name='Описание:')
     user = models.ForeignKey(User, on_delete=models.CASCADE, db_index=True, null=True, blank=True)
 
     class Meta:

@@ -40,10 +40,12 @@
         <td>{{sale.get_total_score|floatformat:"2"}}</td>
         <td>{{sale.get_clean_total_score|floatformat:"2"}}</td>
 
-        {% if sale.discount %}
-            <td>{{sale.discount|floatformat:"0"}} %</td>
-        {% else %}
+        {% if '%' in sale.discount %}
+            <td>{{sale.discount}}</td>
+        {% elif sale.discount == '0' %}
             <td>&#8722;</td>
+        {% else %}
+            <td>{{sale.discount|floatformat:"0"}} руб.</td>
         {% endif %}
         {% if sale.customer_phone %}
             <td>{{sale.customer_phone}}</td>

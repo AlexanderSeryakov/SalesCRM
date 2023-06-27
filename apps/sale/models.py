@@ -9,11 +9,13 @@ from .utils import get_total, get_total_cleaned
 
 class Sale(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT, blank=True, null=True)
-    quantity = models.IntegerField(null=False, blank=False)
-    discount = models.IntegerField(null=False, blank=False)
-    customer_phone = models.CharField(max_length=20, null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    notes = models.TextField(blank=True)
+    quantity = models.IntegerField(null=False, blank=False, verbose_name='Количество проданного товара:')
+    discount = models.CharField(null=False, blank=True, default='0', max_length=5,
+                                verbose_name='Размер скидки в процентах или в рублях, например: 10% или 250')
+    customer_phone = models.CharField(max_length=20, null=True, blank=True,
+                                      verbose_name='Номер телефона покупателя (опционально):')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата продажи:')
+    notes = models.TextField(blank=True, verbose_name='Комментарий к продаже:')
     user = models.ForeignKey(User, on_delete=models.CASCADE, db_index=True)
 
     class Meta:
