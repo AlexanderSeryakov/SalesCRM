@@ -26,15 +26,17 @@ def get_valid_data_for_template(user_id: int, time_range=None) -> list[dict]:
 
     for sale in query_set:
         if sale.product_id not in data_set:
-            data_set[sale.product_id] = {'product__name': sale.get_product_name, 'total_score': sale.get_total_score,
-                                         'total_score_cleaned': sale.get_clean_total_score, 'total_quantity': 1,
+            data_set[sale.product_id] = {'product__name': sale.get_product_name,
+                                         'total_score': round(sale.get_total_score, 2),
+                                         'total_score_cleaned': round(sale.get_clean_total_score, 2),
+                                         'total_quantity': 1,
                                          'total_quantity_all': sale.quantity
                                          }
         else:
             data_set[sale.product_id]['total_quantity'] += 1
             data_set[sale.product_id]['total_quantity_all'] += sale.quantity
-            data_set[sale.product_id]['total_score'] += sale.get_total_score
-            data_set[sale.product_id]['total_score_cleaned'] += sale.get_clean_total_score
+            data_set[sale.product_id]['total_score'] += round(sale.get_total_score, 2)
+            data_set[sale.product_id]['total_score_cleaned'] += round(sale.get_clean_total_score, 2)
 
     return list(data_set.values())
 

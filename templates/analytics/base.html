@@ -27,6 +27,7 @@
 
     {% if data_set %}
 
+
     <div class="total__profit">
         <div class="total__profit_pie">
             <canvas id="pieTotal"></canvas>
@@ -119,18 +120,18 @@
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: [{%for d in data_set%}'{{d.product__name}}',{%endfor%}],
+      labels: [{%for d in data_set%} '{{d.product__name}}',{%endfor%}],
       datasets: [
       {
         label: 'Общая прибыль',
         backgroundColor: "#B587FA",
-        data: [{%for d in data_set%}{{d.total_score|floatformat:2}},{%endfor%}],
+        data: [{%for d in data_set%} {{d.total_score|safe}},{%endfor%}],
         borderWidth: 1,
 
       },{
         label: 'Чистая прибыль',
         backgroundColor: "#536DBD",
-        data: [{%for d in data_set%}{{d.total_score_cleaned|floatformat:2}},{%endfor%}],
+        data: [{%for d in data_set%} {{d.total_score_cleaned|safe}},{%endfor%}],
         borderWidth: 1
       }]
     },
