@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from .models import Product
-from .validators import is_positive_price
+from .validators import is_positive_price, is_correct_price
 
 
 class ProductUpdateForm(forms.ModelForm):
@@ -28,8 +28,9 @@ class ProductUpdateForm(forms.ModelForm):
         return is_positive_price(self.cleaned_data['purchase_price'])
 
     def clean_retail_price(self):
-        retail_price = self.cleaned_data['retail_price']
-        if retail_price <= self.cleaned_data['purchase_price']:
+        retail_price = is_correct_price(self.cleaned_data, key='retail_price')
+        purchase_price = is_correct_price(self.cleaned_data, key='purchase_price')
+        if retail_price <= purchase_price:
             raise ValidationError('Розничная стоимость не может быть меньше закупочной.')
         return is_positive_price(retail_price)
 
