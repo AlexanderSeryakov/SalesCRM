@@ -6,10 +6,21 @@ from django.core.exceptions import ValidationError
 from .models import Sale
 
 
-class SaleUpdateForm(forms.ModelForm):
-    """ Form for update sale-object.
-        This for used in SaleUpdateView.
+class SaleCreateForm(forms.ModelForm):
     """
+    Form for create a new Sale-object.
+    Save-method override to automatically write current user to user-field.
+    This form used in SaleCreateView.
+    """
+
+    def __init__(self, user_info, *args, **kwargs):
+        self.user_info = user_info
+        super().__init__(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.instance.user = self.user_info
+        return super().save(*args, **kwargs)
+
     product = forms.HiddenInput()
 
     class Meta:
@@ -25,9 +36,9 @@ class SaleUpdateForm(forms.ModelForm):
 
     def clean_quantity(self):
         quantity = self.cleaned_data['quantity']
-        if quantity > 0:
+        if 0 < quantity < 101:
             return quantity
-        raise ValidationError('Количество должно быть больше 0.')
+        raise ValidationError('Количество не может превышать 100 единиц и не может быть меньше 1.')
 
     def clean_discount(self):
         discount = self.cleaned_data['discount']
@@ -43,17 +54,10 @@ class SaleUpdateForm(forms.ModelForm):
         return discount
 
 
-class SaleCreateForm(SaleUpdateForm):
-    """
-        Form for create a new Sale-object.
-        Save-method override to automatically write current user to user-field.
-        This form used in SaleCreateView.
+class SaleUpdateForm(SaleCreateForm):
+    """ Form for update sale-object.
+        This for used in SaleUpdateView.
+
+        You can customize this class of override some methods if you needed.
     """
 
-    def __init__(self, user_info, *args, **kwargs):
-        self.user_info = user_info
-        super().__init__(*args, **kwargs)
-
-    def save(self, *args, **kwargs):
-        self.instance.user = self.user_info
-        return super().save(*args, **kwargs)

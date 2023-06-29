@@ -36,7 +36,8 @@ class SaleCreateView(CustomLoginRequiredMixin, CurrentUserMixin, UserProductsMix
     extra_context = {'title': 'Новая продажа'}
 
 
-class SaleUpdateView(CustomLoginRequiredMixin, UserProductsMixin, UserSalePermissionMixin, UpdateView):
+class SaleUpdateView(CustomLoginRequiredMixin, CurrentUserMixin,
+                     UserProductsMixin, UserSalePermissionMixin, UpdateView):
     model = Sale
     form_class = SaleUpdateForm
     template_name = 'sale/update.html'

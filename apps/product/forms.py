@@ -2,17 +2,19 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from .models import Product
-from .validators import is_correct_price, is_positive_price, max_length_name
+from .validators import max_length_name, try_to_get_price, validate_price
 
 
-class ProductUpdateForm(forms.ModelForm):
+class ProductCreateForm(forms.ModelForm):
+    """
+    Form for create a new Product-object.
+    Save-method override to automatically write current user to user-field.
+    This form used in ProductCreateView.
+    """
+
     def __init__(self, user_info, *args, **kwargs):
         self.user_info = user_info
         super().__init__(*args, **kwargs)
-
-    def save(self, *args, **kwargs):
-        self.instance.user = self.user_info
-        return super().save(*args, **kwargs)
 
     class Meta:
         model = Product
@@ -26,36 +28,35 @@ class ProductUpdateForm(forms.ModelForm):
             'notes': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
         }
 
+    def save(self, *args, **kwargs):
+        self.instance.user = self.user_info
+        return super().save(*args, **kwargs)
+
     def clean_name(self):
         name = max_length_name(self.cleaned_data['name'])
 
-        if self.__dict__['initial']['name'] != name and \
-                len(Product.objects.filter(user=self.__dict__['user_info'], name=name)):
+        if Product.objects.filter(user=self.user_info, name=name):
             raise ValidationError(f'У вас уже есть товар с наименованием {name}')
 
         return name
 
     def clean_purchase_price(self):
-        return is_positive_price(self.cleaned_data['purchase_price'])
+        return validate_price(self.cleaned_data['purchase_price'])
 
     def clean_retail_price(self):
-        retail_price = is_correct_price(self.cleaned_data, key='retail_price')
-        purchase_price = is_correct_price(self.cleaned_data, key='purchase_price')
+        retail_price = try_to_get_price(self.cleaned_data, key='retail_price')
+        purchase_price = try_to_get_price(self.cleaned_data, key='purchase_price')
         if retail_price <= purchase_price:
             raise ValidationError('Розничная стоимость не может быть меньше закупочной.')
-        return is_positive_price(retail_price)
+        return validate_price(retail_price)
 
 
-class ProductCreateForm(ProductUpdateForm):
-    """
-        Form for create a new Product-object.
-        Save-method override to automatically write current user to user-field.
-        This form used in ProductCreateView.
-    """
+class ProductUpdateForm(ProductCreateForm):
     def clean_name(self):
         name = max_length_name(self.cleaned_data['name'])
 
-        if Product.objects.filter(user=self.__dict__['user_info'], name=name):
+        if self.__dict__['initial']['name'] != name and \
+                len(Product.objects.filter(user=self.__dict__['user_info'], name=name)):
             raise ValidationError(f'У вас уже есть товар с наименованием {name}')
 
         return name

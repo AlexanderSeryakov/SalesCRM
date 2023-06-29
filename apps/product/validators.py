@@ -7,7 +7,7 @@ def max_length_name(name: str):
     return name
 
 
-def is_positive_price(price: [int, float]) -> float:
+def validate_price(price: [int, float]) -> float:
     """
     Function checks if the price is greater than 0
 
@@ -17,12 +17,17 @@ def is_positive_price(price: [int, float]) -> float:
     :param price: [int, float]
     :return: price or ValidationError
     """
-    if price > 0:
-        return price
-    raise ValidationError('Цена должна быть больше 0')
+    if price <= 0:
+        raise ValidationError('Цена должна быть больше 0')
+
+    split_price = str(price).split('.')
+    if len(split_price[1]) > 3 or len(split_price[0]) > 6:
+        raise ValidationError('Введите цену в корректном формате. Максимальная цена 999999.99')
+
+    return price
 
 
-def is_correct_price(cleaned_data: dict, key: str) -> float:
+def try_to_get_price(cleaned_data: dict, key: str) -> float:
     """
     Function checks that key in cleaned_data.
     This is necessary to make sure that the value with
