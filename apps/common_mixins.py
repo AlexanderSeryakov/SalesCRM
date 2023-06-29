@@ -6,8 +6,9 @@ from apps.product.models import Product
 
 class CurrentUserMixin:
     """ Mixin for hand-over current user and append user-object in form kwargs.
-        Use it in child-class of CreateView only!
+        Use it in subclass of CreateView or UpdateView only!
      """
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs.update({
@@ -23,14 +24,22 @@ class UserProductsMixin:
     a hidden 'product' field.
     Use it with CreateView, UpdateView subclasses.
     """
+
     def get_form(self, form_class=None):
         if form_class is None:
             form_class = self.get_form_class()
+
         form = form_class(**self.get_form_kwargs())
-        form.fields['product'] = forms.ModelChoiceField(label='Товар',
-                                                        queryset=Product.objects.filter(user_id=self.request.user.pk,
-                                                                                        in_stock=True),
-                                                        widget=forms.Select(attrs={'class': 'form-select'}))
+        if 'pk' not in self.__dict__['kwargs']:
+            form.fields['product'] = forms.ModelChoiceField(label='Товар',
+                                                            queryset=Product.objects.filter(
+                                                                user_id=self.request.user.pk,
+                                                                in_stock=True),
+                                                            widget=forms.Select(attrs={'class': 'form-select'}))
+        else:
+            form.fields['product'] = forms.ModelChoiceField(queryset=Product.objects.filter(user_id=self.request.user.pk),
+                                                            widget=forms.Select(attrs={'class': 'form-select'}))
+
         return form
 
 

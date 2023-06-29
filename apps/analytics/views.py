@@ -2,8 +2,10 @@ from datetime import datetime
 
 from django.shortcuts import redirect, render
 from django.views import View
+
 from .forms import MyDateInput
-from .utils import get_valid_data_for_template, get_total_profit_and_tax, get_top_products
+from .utils import (get_top_products, get_total_profit_and_tax,
+                    get_valid_data_for_template)
 
 
 class AnalyticsView(View):

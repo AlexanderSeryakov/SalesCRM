@@ -2,10 +2,18 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from .models import Product
-from .validators import is_positive_price, is_correct_price
+from .validators import is_correct_price, is_positive_price, max_length_name
 
 
 class ProductUpdateForm(forms.ModelForm):
+    def __init__(self, user_info, *args, **kwargs):
+        self.user_info = user_info
+        super().__init__(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.instance.user = self.user_info
+        return super().save(*args, **kwargs)
+
     class Meta:
         model = Product
         fields = ('name', 'purchase_price', 'retail_price', 'in_stock', 'notes')
@@ -19,9 +27,12 @@ class ProductUpdateForm(forms.ModelForm):
         }
 
     def clean_name(self):
-        name = self.cleaned_data['name']
-        if len(name) > 20:
-            raise ValidationError('Наименование товара не должно превышать 20 символов.')
+        name = max_length_name(self.cleaned_data['name'])
+
+        if self.__dict__['initial']['name'] != name and \
+                len(Product.objects.filter(user=self.__dict__['user_info'], name=name)):
+            raise ValidationError(f'У вас уже есть товар с наименованием {name}')
+
         return name
 
     def clean_purchase_price(self):
@@ -41,11 +52,10 @@ class ProductCreateForm(ProductUpdateForm):
         Save-method override to automatically write current user to user-field.
         This form used in ProductCreateView.
     """
+    def clean_name(self):
+        name = max_length_name(self.cleaned_data['name'])
 
-    def __init__(self, user_info, *args, **kwargs):
-        self.user_info = user_info
-        super().__init__(*args, **kwargs)
+        if Product.objects.filter(user=self.__dict__['user_info'], name=name):
+            raise ValidationError(f'У вас уже есть товар с наименованием {name}')
 
-    def save(self, *args, **kwargs):
-        self.instance.user = self.user_info
-        return super().save(*args, **kwargs)
+        return name

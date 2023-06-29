@@ -10,6 +10,7 @@ from apps.sale.models import Sale
 from .forms import ProductCreateForm, ProductUpdateForm
 from .mixins import UserProductPermissionMixin
 from .models import Product
+from .utils import calculate_product_values
 
 
 class ProductListView(CustomLoginRequiredMixin, ListView):
@@ -25,8 +26,13 @@ class ProductListView(CustomLoginRequiredMixin, ListView):
 class ProductDetailView(CustomLoginRequiredMixin, UserProductPermissionMixin, DetailView):
     model = Product
     context_object_name = 'product'
-    extra_context = {'title': 'О товаре'}
     template_name = 'product/detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'О товаре'
+
+        return context | calculate_product_values(context)
 
 
 class ProductCreateView(CustomLoginRequiredMixin, CurrentUserMixin, CreateView):
@@ -36,7 +42,7 @@ class ProductCreateView(CustomLoginRequiredMixin, CurrentUserMixin, CreateView):
     extra_context = {'title': 'Новый товар'}
 
 
-class ProductUpdateView(CustomLoginRequiredMixin, UserProductPermissionMixin, UpdateView):
+class ProductUpdateView(CustomLoginRequiredMixin, CurrentUserMixin, UserProductPermissionMixin, UpdateView):
     model = Product
     form_class = ProductUpdateForm
     template_name = 'product/update.html'

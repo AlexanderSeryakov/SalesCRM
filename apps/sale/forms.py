@@ -1,4 +1,5 @@
 import re
+
 from django import forms
 from django.core.exceptions import ValidationError
 
@@ -30,6 +31,9 @@ class SaleUpdateForm(forms.ModelForm):
 
     def clean_discount(self):
         discount = self.cleaned_data['discount']
+        if discount is '':
+            raise ValidationError('Скидка не может быть пустым полем. Если скидка не была предоставлена '
+                                  '- поставьте значение 0')
         if discount.count('%') > 1 or any(map(lambda sign: sign in discount, '-,./!@`~=\\|/?#$№;:*][}{)(<>')):
             raise ValidationError('Укажите корректный формат скидки')
         elif '%' in discount:

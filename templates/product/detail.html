@@ -7,11 +7,16 @@
                                    alt="left"></a>
 <div class="col-md-6 offset-md-3">
     <div class="card">
-        <h5 class="card-header">{{product.name}} | id: {{product.id}}</h5>
+        <h5 class="card-header">{{product.name}}</h5>
         <div class="card-body">
             <p class="card-text"><strong>Наименование: </strong>{{product.name}}</p>
-            <p class="card-text"><strong>Закупочная цена: </strong>{{product.purchase_price}}</p>
-            <p class="card-text"><strong>Розничная цена: </strong>{{product.retail_price}}</p>
+            <p class="card-text"><strong>Закупочная цена: </strong>{{product.purchase_price|floatformat:2}} руб.</p>
+            <p class="card-text"><strong>Розничная цена: </strong>{{product.retail_price|floatformat:2}} руб.</p>
+            <p class="card-text"><strong>Чистая прибыль с единицы товара учётом налога:
+                </strong>{{cleaned_profit|floatformat:2}} руб.
+            </p>
+            <p class="card-text"><strong>Всего товара продано: </strong>{{total_quantity}}</p>
+            <p class="card-text"><strong>Всего продаж с товаром: </strong>{{sales_count}}</p>
             <p class="card-text"><strong>В наличии: </strong>
                 {% if product.in_stock %}
                     Да

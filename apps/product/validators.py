@@ -1,6 +1,12 @@
 from django.core.exceptions import ValidationError
 
 
+def max_length_name(name: str):
+    if len(name) > 20:
+        raise ValidationError('Наименование товара не должно превышать 20 символов.')
+    return name
+
+
 def is_positive_price(price: [int, float]) -> float:
     """
     Function checks if the price is greater than 0
