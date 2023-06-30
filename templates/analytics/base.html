@@ -10,27 +10,27 @@
 {% block content %}
 <div class="container">
     <br>
-    <h2>Статистика за период: {{time_start|date:"d-m-Y"}} : {{time_end|date:"d-m-Y"}}</h2>
+    <h6 class="display-6 analytics__title">Статистика за период: {{time_start|date:"d-m-Y"}} : {{time_end|date:"d-m-Y"}}</h6>
 
     <form method="post" action="{% url 'analytics'%}">
         {% csrf_token %}
         <div class="custom-form-error form-label">{{ form.non_field_errors }}</div>
         <div class="date_input">
-        {% for f in form %}
+            {% for f in form %}
             <label class="form-label" for="{{ f.id_for_label }}"><strong>{{f.label}}</strong></label>
             {{ f }}
             <div class="form-label">{{ f.errors }}</div>
-        {% endfor %}
+            {% endfor %}
         </div>
-        <button class="btn btn-success">Показать</button>
+        <button class="btn btn-success add_btn">Показать</button>
     </form>
 
     {% if data_set %}
 
-
     <div class="total__profit">
         <div class="total__profit_pie">
             <canvas id="pieTotal"></canvas>
+            <canvas id="pieTotalSmall" style="width:250px;height:150px"></canvas>
         </div>
         <div class="total__profit_top">
             <div class="total__profit_content">
@@ -75,6 +75,34 @@
                 Более подробная статистика по доходу с каждого Вашего товара находится ниже на этой странице.
             </div>
         </div>
+
+    </div>
+
+    <!--  Total profit for small screen  -->
+    <div class="total__profit_top-mobile">
+        <div class="total__profit_wrapper">
+            <div class="content-card">
+                <p class="card-title-mobile">5 самых продаваемых товаров:</p>
+                <ul class="list-group">
+                    {% for sale in top_sales %}
+                    <li class="list-group-item"><strong>{{sale.product__name}}:</strong>
+                        {{sale.total_quantity_all}}
+                        шт.
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="content-card">
+                <p class="card-title-mobile">Товары с наибольшей чистой прибылью:</p>
+                <ul class="list-group">
+                    {% for sale in top_profit %}
+                    <li class="list-group-item"><strong>{{sale.product__name}}:</strong>
+                        {{sale.total_score_cleaned|floatformat:2}} руб.
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
 
     <div class="detail__content">
@@ -88,12 +116,64 @@
         </div>
     </div>
 
+    <!--  All sales for small screen  -->
+    <div class="detail__content-mobile">
+        <p class="table-title">
+            Количество продаж и проданных товаров за период.
+        </p>
+        <table class="table table-striped table-light table_sort">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">Наименование</th>
+                <th scope="col">Продаж с товаром</th>
+                <th scope="col">Продано товара</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for d in data_set %}
+            <tr>
+                <th scope="row">{{d.product__name}}</th>
+                <td>{{d.total_quantity}}</td>
+                <td>{{d.total_quantity_all}} шт.</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!--  end for small screen  -->
+
     <canvas id="myChart" style="width:250px;height:150px"></canvas>
+
+    <!--  detail for small screen  -->
+    <div class="detail__content-mobile">
+        <p class="table-title">
+            Прибыль с продаж за период.
+        </p>
+        <table class="table table-striped table-light table_sort">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">Наименование</th>
+                <th scope="col">Общая прибыль</th>
+                <th scope="col">Чистая прибыль</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for d in data_set %}
+            <tr>
+                <th scope="row">{{d.product__name}}</th>
+                <td>{{d.total_score|safe}} руб.</td>
+                <td>{{d.total_score_cleaned|safe}} руб.</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!--  end for small screen  -->
 
     {% else %}
     <br>
     <div class="alert alert-warning" role="alert">
-        За указанный период нет продаж. Пожалуйста, выберите другой период.
+        За указанный период продаж не найдено. Пожалуйста, выберите другой период.
     </div>
     {% endif %}
 
@@ -333,6 +413,63 @@
     }
   });
 
+  const pieTotalCtxSmall = document.getElementById('pieTotalSmall');
+
+  new Chart(pieTotalCtxSmall, {
+      type: 'pie',
+      data: {
+        labels: ['Общая прибыль', 'Общая чистая прибыль', 'Всего к уплате налогов'],
+        datasets: [{
+            label: 'Счёт',
+            data: {{total_values}},
+            backgroundColor: [
+            '#B587FA',
+            '#536DBD',
+            '#EBC183',
+            'rgb(255, 205, 86)',,
+            ],
+            hoverOffset: 7 }]
+      },
+      options: {
+        plugins: {
+            legend: {
+                display: true,
+                labels: {
+                    color: 'rgb(80, 87, 85)',
+                },
+                position: 'top',
+                font: {
+                    size: 10,
+                }
+            },
+            title: {
+                display: true,
+                text: 'Общие доходы и налоги за период.',
+                padding: {
+                    bottom: 0,
+                },
+                font: {
+                    size: 14,
+                }
+            },
+            datalabels: {
+                formatter: function(value, context) {
+                    return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' руб.';
+                },
+                color: '#ffffff',
+                labels: {
+                    title: {
+                        font: {
+                            weight: 'bold',
+                            size: 10,
+                        }
+                    },
+                }
+
+            }
+        }
+    }
+  });
 
 </script>
 

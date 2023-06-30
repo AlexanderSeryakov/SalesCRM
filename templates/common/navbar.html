@@ -6,6 +6,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            {% if request.user.is_authenticated %}
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'product' %}">Товары</a>
@@ -14,10 +15,11 @@
                     <a class="nav-link active" aria-current="page" href="{% url 'sales' %}">Продажи</a>
                 </li>
             </ul>
+            {% endif %}
             <ul class="navbar-nav me-2 mb-2 mb-lg-0">
                 {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="btn btn-warning common_btn_margins" aria-current="page" href="{% url 'new_sale' %}">
+                    <a class="btn btn-warning nav_btn common_btn_margins" aria-current="page" href="{% url 'new_sale' %}">
                         Новая продажа
                     </a>
                 </li>

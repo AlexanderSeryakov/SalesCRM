@@ -101,3 +101,27 @@ th.sorted[data-order="1"]::after {
 .common_btn_margins{
     margin-right:20px;
 }
+
+.add_btn{
+	margin: 20px 0 20px 0;
+}
+
+.table_modile{
+	display: none;
+}
+
+.total__profit_wrapper{
+	display: none;
+}
+
+.detail__content-mobile{
+	display: none;
+}
+
+#pieTotalSmall{
+	display: none!important;
+}
+
+.detail__content-mobile{
+	display: none;
+}

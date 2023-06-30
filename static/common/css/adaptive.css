@@ -1,0 +1,160 @@
+@media only screen and (max-width: 992px){
+	.nav-link{
+		font-size: 14px!important;
+	}
+	.add_btn{
+		font-size: 13px!important;
+		margin: 0 0 10px 0;
+	}
+	.nav_btn{
+		font-size: 13px!important;
+	}
+	.table_common{
+		display: none;
+	}
+	.table_modile{
+		display: table;
+	}
+	.footer{
+		height: auto;
+	}
+	.footer__link{
+		font-size: 12px;
+		margin-left: 30px;
+	}
+	.copyright{
+		font-size: 12px;
+		margin-left: 30px;
+	}
+	.total__profit_wrapper{
+		display: flex;
+		justify-content: space-between;
+		font-size: 14px;
+	}
+	.card-title-mobile{
+		font-weight: 500;
+		max-height: 30px!important;
+	}
+	th{
+		font-size: 14px;
+	}
+	td{
+		font-size: 14px;
+	}
+	#pie{
+		height: 330px!important;
+		width: 330px!important;
+	}
+	#pieSale{
+		height: 330px!important;
+		width: 330px!important;
+	}
+	#pieTotal{
+		height: 400px!important;
+		width: 400px!important;
+	}
+	.total__profit_top{
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 768px){
+	.detail__content{
+		display: none!important;
+	}
+	#myChart{
+		display: none!important;
+	}
+	.detail__content-mobile{
+		display: block;
+		margin-top: 50px;
+	}
+	.table-title{
+		text-align: center;
+		font-weight: 500;
+	}
+}
+
+@media only screen and (max-width: 480px){
+	.nav-link{
+		font-size: 13px!important;
+	}
+	.add_btn{
+		font-size: 12px!important;
+		margin: 0 0 5px 0;
+	}
+	.table_common{
+		display: none;
+	}
+	.table_modile{
+		display: table;
+	}
+	.footer__content{
+		line-height: 40px;
+	}
+	.mobile-hidden{
+		display: none;
+	}
+	.analytics__title{
+		font-size: 20px!important;
+	}
+	.date_input{
+		font-size: 12px;
+	}
+	.create-title{
+		
+	}
+	.total__profit_wrapper{
+		margin-top: 30px;
+	}
+	.total__profit_pie{
+		margin: 0 auto;
+	}
+	#pieTotal{
+		display: none!important;
+	}
+	#pieTotalSmall{
+		display: block!important;
+	}
+}
+
+
+@media only screen and (max-width: 320px){
+	.table_common{
+		display: none;
+	}
+	.table_modile{
+		display: table;
+	}
+	th{
+		font-size: 11px;
+	}
+	td{
+		font-size: 11px;
+	}
+	.card-header{
+		font-size: 14px;
+	}
+	.card-body{
+		font-size: 12px;
+	}
+	.btn-detail{
+		font-size: 12px!important;
+	}
+	.table-title{
+		font-size: 13px;
+	}
+	.create-title{
+		font-size: 15px;
+	}
+	.list-group{
+		font-size: 12px!important;
+	}
+	form{
+		font-size: 13px;
+	}
+	.detail__content{
+		display: none!important;
+	}
+}
+

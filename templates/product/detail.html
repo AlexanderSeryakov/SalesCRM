@@ -29,10 +29,10 @@
     </div>
     <br>
     <div class="wrapper">
-        <a class="btn btn-primary" href="{% url 'product_update' product.pk %}">Изменить</a>
+        <a class="btn btn-primary btn-detail" href="{% url 'product_update' product.pk %}">Изменить</a>
         <form style="display:inline" method="POST" action="{% url 'product_delete' product.pk %}">
             {% csrf_token %}
-            <input type="submit" value="Удалить" class="btn btn-danger">
+            <input type="submit" value="Удалить" class="btn btn-danger btn-detail">
         </form>
     </div>
 </div>
