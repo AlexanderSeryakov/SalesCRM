@@ -7,7 +7,7 @@
 <a href="{% url 'sales' %}"><img class="custom_arrow" src="{% static 'common/images/arrow-left.png' %}" alt="left"></a>
 <div class="col-md-6 offset-md-3">
     <div class="card">
-        <h5 class="card-header">Продажа товара: {{detail.product.name}}</h5>
+        <h5 class="card-header">Продажа товара: <a href="{{ detail.product.get_absolute_url }}">{{detail.product.name}}</a></h5>
         <div class="card-body">
             <p class="card-text"><strong>Закупочная цена: </strong>{{detail.product.purchase_price|floatformat:"2"}}
                 руб.</p>
