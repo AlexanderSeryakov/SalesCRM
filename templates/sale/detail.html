@@ -1,5 +1,6 @@
 {% extends 'common/base.html' %}
 {% load static %}
+{% load phone_format_tag %}
 
 {% block content %}
 <br>
@@ -24,6 +25,7 @@
             <p class="card-text"><strong>Чистая прибыль: </strong>{{detail.get_clean_total_score|floatformat:"2"}} руб.
             </p>
             <p class="card-text"><strong>Дата продажи: </strong>{{detail.created_at|date:"d-m-Y"}}</p>
+            <p><strong>Номер телефона покупателя: </strong>{{detail.customer_phone|phone_format}}</p>
             <p class="card-text"><strong>Комментарии: </strong></p>
             <div class="card-body">
                 {{detail.notes}}

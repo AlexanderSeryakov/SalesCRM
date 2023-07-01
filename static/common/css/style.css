@@ -125,3 +125,7 @@ th.sorted[data-order="1"]::after {
 .detail__content-mobile{
 	display: none;
 }
+
+.adaptive__screen{
+	display: none;
+}

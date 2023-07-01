@@ -1,5 +1,6 @@
 {% extends 'common/base.html' %}
 {% load static %}
+{% load phone_format_tag %}
 
 {% block content %}
 
@@ -66,7 +67,7 @@
             <td>{{sale.discount|floatformat:"0"}} руб.</td>
         {% endif %}
         {% if sale.customer_phone %}
-            <td>{{sale.customer_phone}}</td>
+            <td>{{sale.customer_phone|phone_format}}</td>
         {% else %}
             <td>&#8722;</td>
         {% endif %}

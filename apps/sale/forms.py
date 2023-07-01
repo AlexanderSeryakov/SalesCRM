@@ -4,6 +4,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from .models import Sale
+from .validators import validate_phone_number
 
 
 class SaleCreateForm(forms.ModelForm):
@@ -42,7 +43,7 @@ class SaleCreateForm(forms.ModelForm):
 
     def clean_discount(self):
         discount = self.cleaned_data['discount']
-        if discount is '':
+        if discount == '':
             raise ValidationError('Скидка не может быть пустым полем. Если скидка не была предоставлена '
                                   '- поставьте значение 0')
         if discount.count('%') > 1 or any(map(lambda sign: sign in discount, '-,./!@`~=\\|/?#$№;:*][}{)(<>')):
@@ -52,6 +53,9 @@ class SaleCreateForm(forms.ModelForm):
             if len(d[0].replace('%', '')) > 2:
                 raise ValidationError('Укажите корректный формат скидки')
         return discount
+
+    def clean_customer_phone(self):
+        return validate_phone_number(self.cleaned_data['customer_phone'])
 
 
 class SaleUpdateForm(SaleCreateForm):
