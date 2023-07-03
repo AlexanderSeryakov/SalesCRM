@@ -4,7 +4,8 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from .models import Sale
-from .validators import validate_phone_number
+from .utils import change_product_quantity
+from .validators import quantity_in_allow_range, validate_phone_number
 
 
 class SaleCreateForm(forms.ModelForm):
@@ -37,9 +38,18 @@ class SaleCreateForm(forms.ModelForm):
 
     def clean_quantity(self):
         quantity = self.cleaned_data['quantity']
-        if 0 < quantity < 101:
-            return quantity
-        raise ValidationError('Количество не может превышать 100 единиц и не может быть меньше 1.')
+
+        quantity_in_allow_range(quantity=quantity)
+        curr_product = self.cleaned_data['product']
+        quantity_on_storage = curr_product.in_stock
+
+        if quantity_on_storage < quantity:
+            raise ValidationError(f"""Всего товара на складе {quantity_on_storage}, невозможно изменить значение, 
+                                      проверьте корректность введённых данных""")
+
+        change_product_quantity(product=curr_product, new_quantity=quantity)
+
+        return quantity
 
     def clean_discount(self):
         discount = self.cleaned_data['discount']
@@ -65,3 +75,22 @@ class SaleUpdateForm(SaleCreateForm):
         You can customize this class of override some methods if you needed.
     """
 
+    def clean_quantity(self):
+        new_quantity = self.cleaned_data['quantity']
+
+        quantity_in_allow_range(quantity=new_quantity)
+
+        current_quantity = self.initial['quantity']
+        curr_product = self.cleaned_data['product']
+        quantity_on_storage = curr_product.in_stock
+
+        if new_quantity < current_quantity or current_quantity < new_quantity \
+                and new_quantity - current_quantity <= quantity_on_storage:
+            change_product_quantity(product=curr_product, new_quantity=new_quantity, current_quantity=current_quantity)
+            return new_quantity
+
+        elif current_quantity == new_quantity:
+            return new_quantity
+
+        raise ValidationError(f'Всего товара на складе {quantity_on_storage}, невозможно изменить значение, '
+                              f'проверьте корректность введённых данных')
