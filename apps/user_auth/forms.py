@@ -47,7 +47,7 @@ class SignUpForm(UserCreationForm):
 
     def clean_username(self):
         username = self.cleaned_data['username']
-        if re.match('^[a-z0-9_-]{3,16}$', username) is None:
+        if re.match('^[a-z-A-Z0-9_-]{3,16}$', username) is None:
             raise ValidationError('Логин может содержать только строчные и заглавные латинские буквы, цифры'
                                   'а также символ подчёркивания и дефис. Логин не может быть короче 3 символов и '
                                   'длиннее'

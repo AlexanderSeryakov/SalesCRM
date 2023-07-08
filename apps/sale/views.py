@@ -7,7 +7,6 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
 from apps.common_mixins import (CurrentUserMixin, CustomLoginRequiredMixin,
                                 UserProductsMixin)
 
-from ..product.models import Product
 from .forms import SaleCreateForm, SaleUpdateForm
 from .mixins import UserSalePermissionMixin
 from .models import Sale
