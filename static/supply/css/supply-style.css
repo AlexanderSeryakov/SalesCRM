@@ -1,0 +1,86 @@
+.create__supply, .supply__confirm , .supply__created{
+    margin: 30px 0 30px 0;
+}
+
+.create__supply-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.supply_wrapper {
+    max-width: 640px;
+}
+
+.supply__form {
+    display: block;
+    max-width: 700px;
+}
+
+.form-block {
+    display: inline-block;
+    max-width: 100%;
+    width: 308px;
+    margin: 10px 20px 0 0;
+}
+
+#insertField {
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
+.create__supply-inputs {
+    max-width: 690px;
+}
+
+.wrapper {
+    margin-left: 10px;
+}
+
+.supply-btn {
+    display: block;
+    max-width: 100%;
+    width: 640px;
+    margin: 15px 0 15px 0;
+}
+
+.input-error .num-input{
+    color: #f77c7c;
+    border-color: #f77c7c;
+}
+
+.input-error .shipping-input{
+    color: #f77c7c;
+    border-color: #f77c7c;
+}
+
+.error-label {
+    color: #f77c7c;
+    display: block;
+}
+
+.hidden_field{
+    display: none;
+}
+
+.confirm-card {
+    margin: 30px 0 30px 0;
+}
+
+.shipper-strong {
+    display: flex;
+}
+
+.shipper {
+    margin: 0 0 0 10px;
+}
+
+.shipper-row {
+    display: flex;
+    font-size: 20px
+}
+
+.detail-table {
+    margin: 30px 0 30px 0;
+}
+

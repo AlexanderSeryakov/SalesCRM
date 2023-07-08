@@ -1,0 +1,49 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'supply/css/supply-style.css' %}">
+<script defer src="{% static 'supply/js/supplyToggler.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <br>
+    <div class="supply__created hidden_field" id="supply__created">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Поставка успешно создана.</strong> Количество товара на складе изменено
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    <a class="btn btn-primary add_btn" href="{% url 'new_supply' %}">
+        Добавить поставку
+    </a>
+{% if supplies %}
+    <!-- Include pagination -->
+    {% include 'common/pagination.html' %}
+    <table class="table table-striped table-hover table_sort">
+        <thead class="table-dark non-select">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Поставщик</th>
+            <th scope="col">Общее количество товаров</th>
+            <th scope="col">Дата</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for s in supplies %}
+        <tr>
+            <td><a href="{{ s.get_absolute_url }}">{{ s.id }}</a></td>
+            <td>{{ s.shipper }}</td>
+            <td>{{ s.total_products }}</td>
+            <td>{{s.created_at|date:"j-m-Y"}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+
+<p class="no-items-text">
+    Нет добавленных поставок
+</p>
+{% endif %}
+{% endblock %}

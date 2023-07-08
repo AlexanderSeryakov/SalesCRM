@@ -29,6 +29,6 @@ class UserProductPermissionMixin:
             obj = queryset.get()
         except queryset.model.DoesNotExist:
             raise Http404(
-                ('Error. Please, enter correct ID!')
+                ('Error. Товар не найден или был удалён.')
             )
         return obj
