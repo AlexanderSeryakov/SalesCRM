@@ -112,6 +112,9 @@
 }
 
 @media only screen and (max-width: 480px){
+    .not-found_image{
+        max-height: 260px!important;
+    }
 	.nav-link{
 		font-size: 13px!important;
 	}
