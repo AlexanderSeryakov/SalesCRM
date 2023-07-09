@@ -76,6 +76,9 @@
 	.container-adaptive{
 		padding-left: 0!important;
 	}
+	.active_tab{
+	    border: none!important;
+	}
 }
 
 @media only screen and (max-width: 768px){
@@ -112,6 +115,9 @@
 }
 
 @media only screen and (max-width: 480px){
+    .not-found_image{
+        max-height: 260px!important;
+    }
 	.nav-link{
 		font-size: 13px!important;
 	}

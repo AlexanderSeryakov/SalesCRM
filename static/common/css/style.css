@@ -129,3 +129,9 @@ th.sorted[data-order="1"]::after {
 .adaptive__screen{
 	display: none;
 }
+
+.active_tab{
+    color: #e0c238!important;
+    border-bottom: 1px solid #d6b458!important;
+    padding-bottom: 2px!important;
+}

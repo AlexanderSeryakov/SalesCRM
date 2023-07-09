@@ -1,0 +1,95 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block head %}
+
+<link rel="stylesheet" href="{% static 'supply/css/supply-style.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<div class="supply__confirm">
+    <div class="confirm-card">
+        <div class="confirm-row">
+            <div class="shipper-row">
+                <strong>
+                    Поставщик: 
+                </strong>
+                <p class="shipper">
+                    {{ supply.shipper }}
+                </p>
+            </div>
+            <div class="shipper-row">
+                <strong>Телефон поставщика: </strong>
+                {% if supply.shipper_phone %}
+                <p class="shipper">
+                    {{ supply.shipper_phone }}
+                </p>
+                {% else %}
+                <p class="shipper">
+                    не указан
+                </p>
+                {% endif %}
+            </div>
+            <div class="shipper-row">
+                <strong>Реквизиты поставщика: </strong>
+                {% if supply.shipper_buisnes %}
+                <p class="shipper">
+                    {{ supply.shipper_buisnes }}
+                </p>
+                {% else %}
+                <p class="shipper">
+                    не указаны
+                </p>
+                {% endif %}
+            </div>
+            <div class="shipper-row">
+                <strong>Адрес поставщика: </strong>
+                {% if supply.shipper_address %}
+                <p class="shipper">
+                    {{ supply.shipper_address }}
+                </p>
+                {% else %}
+                <p class="shipper">
+                    не указан
+                </p>
+                {% endif %}
+            </div>
+            <div class="shipper-row">
+                <strong>Комментарии к поставке: </strong>
+                {% if supply.comments %}
+                <p class="shipper">
+                    {{ supply.comments }}
+                </p>
+                {% else %}
+                <p class="shipper">
+                    &#8722;
+                </p>
+                {% endif %}
+            </div>
+        </div>
+        <table class="table table-hover table-bordered detail-table">
+            <thead>
+              <tr>
+                <th scope="col">Наименование товара</th>
+                <th scope="col">Количество (штук)</th>
+              </tr>
+            </thead>
+            {% for product in supply.products %}
+               <tr>
+                <td>
+                    <a class="link-primary" href="{% url 'product_detail' product.productId|floatformat:'0' %}">
+                        {{ product.productName }}
+                    </a>
+                </td>
+                <td>
+                    {{ product.quantity }}
+                </td>
+               </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
