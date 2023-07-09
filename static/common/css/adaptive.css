@@ -111,6 +111,14 @@
 		width: 30px!important;
 		margin: 20% 10px 0 6px!important;
 	}
+	.wrapper, .content-hr{
+		width: 480px!important;
+		margin-top: 30px!important;
+	}
+	.form-block{
+		width: 480px!important;
+
+	}
 	
 }
 
@@ -224,20 +232,20 @@
 		width: 20px!important;
 		margin: 20% 6px 0 6px!important;
 	}
-	.wrapper, .form-block{
-		font-size: 13px!important;
-		margin-top: 6px!important;
-	}
-	.form-block{
-		max-width: none!important;
-		width: 206px!important;
-	}
 	.num-input{
 		font-size: 12px!important;
 	}
 	.supply-btn{
 		max-width: none!important;
-		width: 206px!important;
+		width: 305px!important;
+	}
+	.wrapper, .content-hr{
+		width: 305px!important;
+		margin-top: 20px!important;
+	}
+	.form-block{
+		width: 305px!important;
+
 	}
 }
 
@@ -332,16 +340,12 @@
 	.transfer-double-selected-list-content{
 		height: 163px!important;
 	}
-	.wrapper, .form-block{
-		font-size: 13px!important;
-		margin-top: 6px!important;
-	}
 	.num-input{
 		font-size: 12px!important;
 	}
 	.supply-btn{
 		max-width: none!important;
-		width: 208px!important;
+		width: 250px!important;
 	}
 	.transfer-double-list-main,
 	.transfer-double-selected-list-main,
@@ -352,6 +356,14 @@
 	}
 	.param-item{
 		line-height: 17px!important;
+	}
+	.wrapper, .content-hr{
+		width: 250px!important;
+		margin-top: 15px!important;
+	}
+	.form-block{
+		width: 250px!important;
+
 	}
 }
 
