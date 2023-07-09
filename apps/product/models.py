@@ -7,7 +7,7 @@ class Product(models.Model):
     name = models.CharField(max_length=512, verbose_name='Наименование:')
     purchase_price = models.FloatField(null=False, blank=False, verbose_name='Закупочная стоимость:')
     retail_price = models.FloatField(null=False, blank=False, verbose_name='Розничная стоимость:')
-    in_stock = models.BooleanField(default=True, verbose_name='В наличии:')
+    in_stock = models.PositiveIntegerField(null=False, blank=True, verbose_name='Количество товара:')
     notes = models.TextField(blank=True, null=True, verbose_name='Описание:')
     user = models.ForeignKey(User, on_delete=models.CASCADE, db_index=True, null=True, blank=True)
 

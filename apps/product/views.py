@@ -58,7 +58,10 @@ class ProductDeleteView(CustomLoginRequiredMixin, UserProductPermissionMixin, De
         success_url = self.get_success_url()
         if Sale.objects.filter(product_id=self.object.id):
             messages.error(self.request, 'С этим товаром связаны продажи, удаление невозможно! '
-                                         'Если товар отсутствует, уберите галочку под пунктом "В наличии"!')
+                                         'Когда количество товара станет равным 0, он автоматически передёт в статус'
+                                         'отсутсвтующего и будет выделен серым цветом. Вы можете самостоятельно '
+                                         'установить'
+                                         'количество товара равное 0.')
             return HttpResponseRedirect(success_url)
         self.object.delete()
         messages.success(self.request, 'Товар успешно удалён!')

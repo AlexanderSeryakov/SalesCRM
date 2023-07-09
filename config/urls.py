@@ -9,8 +9,12 @@ urlpatterns = [
     path('analytics/', include('apps.analytics.urls')),
     path('product/', include('apps.product.urls')),
     path('help/', include('apps.help.urls')),
+    path('supply/', include('apps.supply.urls')),
 ]
 
 
 if settings.DEBUG:
     urlpatterns += [path("__debug__/", include("debug_toolbar.urls"))]
+
+
+handler404 = 'config.views.error_404_view'

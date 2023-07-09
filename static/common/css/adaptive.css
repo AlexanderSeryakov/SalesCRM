@@ -64,6 +64,21 @@
 	.total__profit_top{
 		display: none;
 	}
+	.shipper-row{
+		font-size: 15px!important;
+	}
+	.create__supply-header{
+		display: block!important;
+	}
+	.wrapper{
+		margin: 0px!important;
+	}
+	.container-adaptive{
+		padding-left: 0!important;
+	}
+	.active_tab{
+	    border: none!important;
+	}
 }
 
 @media only screen and (max-width: 768px){
@@ -81,10 +96,28 @@
 		text-align: center;
 		font-weight: 500;
 	}
+	.transfer-double{
+		width: 480px!important;
+	}
+	.transfer-double-content-left,
+	.transfer-double-content-right{
+		width: 190px!important;
+	}
+	.transfer-double-list-search-input,
+	.transfer-double-selected-list-search-input{
+		width: 150px!important;
+	}
+	.transfer-double-content-middle{
+		width: 30px!important;
+		margin: 20% 10px 0 6px!important;
+	}
 	
 }
 
 @media only screen and (max-width: 480px){
+    .not-found_image{
+        max-height: 260px!important;
+    }
 	.nav-link{
 		font-size: 13px!important;
 	}
@@ -145,6 +178,67 @@
 	.header_title-text{
 		font-size: 25px!important;
 	}
+	.shipper-row{
+		font-size: 13px!important;
+	}
+	.transfer-double{
+		width: 305px!important;
+		height: 300px!important;
+	}
+	.transfer-double-content{
+		padding: 2px 2px 2px 2px!important;
+	}
+	.transfer-double-content-left,
+	.transfer-double-content-right{
+		width: 130px!important;
+		height: 270px!important;
+	}
+	.btn-select-arrow{
+		width: 17px!important;
+	}
+	.checkbox-group label:before{
+		width: 14px!important;
+		height: 14px!important;
+	}
+	.iconfont{
+		font-size: 13px!important;
+	}
+	.transfer-double-list-search-input,
+	.transfer-double-selected-list-search-input{
+		width: 100px!important;
+	}
+	.transfer-double-list-main,
+	.transfer-double-selected-list-main,
+	.transfer-double-selected-list-ul,
+	.transfer-double-list-ul{
+		padding-left: 6px!important;
+		height: 160px!important;
+	}
+	.checkbox-group{
+		font-size: 11px!important;
+	}
+	.param-item{
+		font-size: 13px!important;
+	}
+	.transfer-double-content-middle{
+		width: 20px!important;
+		margin: 20% 6px 0 6px!important;
+	}
+	.wrapper, .form-block{
+		font-size: 13px!important;
+		margin-top: 6px!important;
+	}
+	.form-block{
+		max-width: none!important;
+		width: 206px!important;
+	}
+	.num-input{
+		font-size: 12px!important;
+	}
+	.supply-btn{
+		max-width: none!important;
+		width: 206px!important;
+	}
 }
 
 
@@ -204,6 +298,60 @@
 	}
 	.header_title-text{
 		font-size: 20px!important;
+	}
+	.transfer-double{
+		width: 250px!important;
+	}
+	.transfer-double-content{
+		padding: 2px 2px 2px 2px!important;
+	}
+	.transfer-double-content-left,
+	.transfer-double-content-right{
+		width: 110px!important;
+	}
+	.btn-select-arrow{
+		width: 17px!important;
+	}
+	.iconfont{
+		font-size: 13px!important;
+	}
+	.transfer-double-list-search-input,
+	.transfer-double-selected-list-search-input{
+		width: 80px!important;
+	}
+	.checkbox-group{
+		font-size: 13px!important;
+	}
+	.param-item{
+		font-size: 14px!important;
+	}
+	.transfer-double-content-middle{
+		width: 10px!important;
+		margin: 20% 8px 0 1px!important;
+	}
+	.transfer-double-selected-list-content{
+		height: 163px!important;
+	}
+	.wrapper, .form-block{
+		font-size: 13px!important;
+		margin-top: 6px!important;
+	}
+	.num-input{
+		font-size: 12px!important;
+	}
+	.supply-btn{
+		max-width: none!important;
+		width: 208px!important;
+	}
+	.transfer-double-list-main,
+	.transfer-double-selected-list-main,
+	.transfer-double-selected-list-ul,
+	.transfer-double-list-ul{
+		padding-left: 0px!important;
+		height: 160px!important;
+	}
+	.param-item{
+		line-height: 17px!important;
 	}
 }
 

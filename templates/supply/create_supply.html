@@ -1,0 +1,120 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'supply/groupable/icon_font/css/icon_font.css' %}">
+<link rel="stylesheet" href="{% static 'supply/groupable/css/jquery.transfer.css' %}">
+<link rel="stylesheet" href="{% static 'supply/css/supply-style.css' %}">
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"
+        crossorigin="anonymous"></script>
+<script src="{% static 'supply/groupable/js/jquery.transfer.js' %}"></script>
+<script defer src="{% static 'supply/js/supply-main.js' %}"></script>
+<script defer src="{% static 'supply/js/appendOrRemoveItems.js' %}"></script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="create__supply">
+    <div class="create__supply-header">
+        <div class="transfer">
+        </div>
+
+        <div class="container overflow-hidden container-adaptive">
+            <div class="create__supply-inputs row gy-5" id="insertField">
+            </div>
+        </div>
+        
+
+    </div>
+
+    <div class="supply__form">
+        <div class="form-block">
+            <label data-equired="true" for="shipper" class="form-label">Поставщик*</label>
+            <input type="text" class="form-control shipping-input" id="shipper" placeholder="Электрохолдинг">
+        </div>
+        <div class="form-block">
+            <label for="shipper-phone" class="form-label">Телефон поставщика</label>
+            <input type="email" class="form-control shipping-input" id="shipper-phone" placeholder="88001000800">
+        </div>
+        <div class="form-block">
+            <label for="shipper-buisnes" class="form-label">Реквизиты поставщика</label>
+            <input type="text" class="form-control shipping-input" id="shipper-buisnes" placeholder="ИП 13-28-087306-06">
+        </div>
+        <div class="form-block">
+            <label for="shipper-address" class="form-label">Адрес</label>
+            <input type="text" class="form-control shipping-input" id="shipper-address" placeholder="Москва, Бауманская 35/1">
+        </div>
+        <div class="form-block">
+            <label for="shipper-comments" class="form-label">Комментарии</label>
+            <textarea class="form-control shipping-input" id="shipper-comments" rows="2"></textarea>
+        </div>
+    </div>
+    <button class="btn btn-primary supply-btn" id="supply-btn" type="submit">
+        Продолжить
+    </button>
+    
+</div>
+
+<div class="supply__confirm hidden_field" id="supply__confirm">
+    <h5>Проверьте корректность введённых данных</h5>
+    <hr>
+    <div class="confirm-card" id="confirm-card">
+        <div class="confirm-row">
+            <p id="confirm-shipper" class="shipper-strong"><strong>Поставщик: </strong></p>
+            <p id="confirm-shipper-phone" class="shipper-strong"><strong>Телефон поставщика: </strong></p>
+            <p id="confirm-shipper-buisnes" class="shipper-strong"><strong>Реквизиты поставщика: </strong></p>
+            <p id="confirm-shipper-address" class="shipper-strong"><strong>Адрес поставщика: </strong></p>
+            <p id="confirm-shipper-comments" class="shipper-strong"><strong>Комментарии к поставке: </strong></p>
+        </div>
+        <table class="table table-hover table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Наименование товара</th>
+                <th scope="col">Количество (штук)</th>
+              </tr>
+            </thead>
+            <tbody id="t-body">
+            </tbody>
+        </table>
+        <div class="nav-btns">
+            <button id="edit-supply" class="btn btn-primary">
+                Редактировать
+            </button>
+
+            <button id="confirm-supply" class="btn btn-success">
+                Сохранить
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+var doc = document;
+
+var dataArray = [{% for p in products %} {productName:'{{p.name}}', productId: {{ p.pk }} } ,{% endfor %}];
+
+var settings = {
+    dataArray: dataArray,
+    itemName: 'productName',
+    valueName: 'productId',
+    tabNameText: 'Товары',
+    rightTabNameText: 'Товары в поставке',
+    searchPlaceholderText: 'поиск',
+    callable: function (items) {
+        localStorage.setItem('items', JSON.stringify(items));
+
+        // function from supply-main.js
+        appendOrRemoveItems();
+    }
+};
+
+var transfer = $(".transfer").transfer(settings);
+transfer.getSelectedItems();
+
+</script>
+
+{% endblock %}

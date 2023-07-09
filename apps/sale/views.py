@@ -10,6 +10,7 @@ from apps.common_mixins import (CurrentUserMixin, CustomLoginRequiredMixin,
 from .forms import SaleCreateForm, SaleUpdateForm
 from .mixins import UserSalePermissionMixin
 from .models import Sale
+from .utils import change_product_quantity
 
 
 class SaleListView(CustomLoginRequiredMixin, ListView):
@@ -51,6 +52,8 @@ class SaleDeleteView(CustomLoginRequiredMixin, UserSalePermissionMixin, DeleteVi
 
     def form_valid(self, form):
         success_url = self.get_success_url()
+        change_product_quantity(product=self.object.product,
+                                current_quantity=self.object.quantity)
         self.object.delete()
-        messages.success(self.request, 'Продажа успешно удалёна!')
+        messages.success(self.request, 'Продажа успешно удалёна. Количество товара на складе изменено.')
         return HttpResponseRedirect(success_url)

@@ -34,7 +34,7 @@ class UserProductsMixin:
             form.fields['product'] = forms.ModelChoiceField(label='Товар',
                                                             queryset=Product.objects.filter(
                                                                 user_id=self.request.user.pk,
-                                                                in_stock=True),
+                                                                in_stock__gt=0),
                                                             widget=forms.Select(attrs={'class': 'form-select'}))
         else:
             form.fields['product'] = forms.ModelChoiceField(queryset=Product.objects.filter(user_id=self.request.user.pk),

@@ -1,0 +1,30 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'common/css/errors.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="card error-card">
+    <div class="card-header text-white bg-dark h6">
+        404
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Страница не найдена...</h5>
+
+        <ul class="list-unstyled">
+            <li><p class="h6">Почему я вижу это сообщение?</p>
+                <ul>
+                    <li>Вы ввели <mark>некорректный/несуществующий</mark> адрес сайта.</li>
+                    <li>Вы пытались открыть страницу удалённого или несуществующего <mark>товара/продажи/поставки.</mark></li>
+                    <li><mark>Раздел/страница</mark> удалены или изменили адрес.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <p class="card-text">Вы можете покинуть эту страницу.</p>
+        <img src="{% static 'common/images/not_found.svg' %}" alt="not found" class="not-found_image">
+    </div>
+</div>
+{% endblock %}

@@ -24,7 +24,7 @@ class ProductCreateForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'purchase_price': forms.TextInput(attrs={'class': 'form-control'}),
             'retail_price': forms.TextInput(attrs={'class': 'form-control'}),
-            'in_stock': forms.CheckboxInput(attrs={'class': 'form-check'}),
+            'in_stock': forms.TextInput(attrs={'class': 'form-control'}),
             'notes': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
         }
 
@@ -49,6 +49,12 @@ class ProductCreateForm(forms.ModelForm):
         if retail_price <= purchase_price:
             raise ValidationError('Розничная стоимость не может быть меньше закупочной.')
         return validate_price(retail_price)
+
+    def clean_in_stock(self):
+        quantity_to_sale = self.cleaned_data['in_stock']
+        # quantity_on_storage = Product.objects.get(pk=self.cleaned_data['product'].pk)
+        print(quantity_to_sale)
+        return quantity_to_sale
 
 
 class ProductUpdateForm(ProductCreateForm):

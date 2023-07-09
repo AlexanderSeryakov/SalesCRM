@@ -1,4 +1,9 @@
 {% extends 'common/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'user_auth/css/style.css'%}">
+{% endblock %}
 
 {% block content %}
 <div class="col-md-6 offset-md-3">
@@ -6,9 +11,32 @@
     <h1>Регистрация</h1>
     <br>
     <form method="post">
-    {% csrf_token %}
-    {{ form.as_p}}
-        <button type="submit" class="btn btn-success">Зарегистрироваться</button>
+        {% csrf_token %}
+        <div class="custom-form-error form-label">{{ form.non_field_errors }}</div>
+        <p><label class="form-label" for="{{ form.username.id_for_label }}">{{form.username.label}}</label>{{form.username}}</p>
+        <div class="form-label custom-form-error">{{ form.username.errors }}</div>
+        <span class="form-text text-muted "><small>{{form.username.help_text}}</small></span>
+
+        <div class="custom-form-error form-label">{{ form.non_field_errors }}</div>
+        <p><label class="form-label" for="{{ form.email.id_for_label }}">{{form.email.label}}</label>{{form.email}}</p>
+        <div class="form-label custom-form-error">{{ form.email.errors }}</div>
+        <span class="form-text text-muted "><small>{{form.email.help_text}}</small></span>
+
+        <p><label class="form-label" for="{{ form.password.id_for_label }}">{{form.password1.label}}</label>{{form.password1}}</p>
+        <div class="form-label custom-form-error">{{ form.password1.errors }}</div>
+        <ul class="form-text text-muted small">
+            {% for h in form.password1.help_text %}
+            <li>
+                {{h}}
+            </li>
+            {% endfor %}
+        </ul>
+
+        <p><label class="form-label" for="{{ form.password.id_for_label }}">{{form.password2.label}}</label>{{form.password2}}</p>
+        <div class="form-label custom-form-error">{{ form.password2.errors }}</div>
+        <span class="form-text text-muted small" style="display:block;">{{form.password2.help_text}}</span>
+
+        <button type="submit" class="btn btn-success register__btn">Зарегистрироваться</button>
     </form>
 </div>
 {% endblock %}
